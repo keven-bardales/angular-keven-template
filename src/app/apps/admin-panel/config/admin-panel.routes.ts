@@ -1,13 +1,10 @@
 import { Routes } from "@angular/router";
+import { AdminLayout } from "../core/components/layout/admin-layout/admin-layout";
 
 export const adminPanelRoutes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full'
-  },
-  {
-    path: 'dashboard',
+    component: AdminLayout,
     children: [
       {
         path: '',
