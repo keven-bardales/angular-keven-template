@@ -8,6 +8,6 @@ export const routes: Routes = [
   },
   {
     path: 'admin-panel',
-    loadChildren: () => import('./apps/admin-panel/config/admin-panel.routes').then(m => m.adminPanelRoutes)
+    loadChildren: () => import('./apps/admin-panel/config/admin-panel.routes').then(m => m.generateAdminPanelRoutes())
   }
 ];

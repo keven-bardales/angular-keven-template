@@ -13,16 +13,27 @@ export const adminPanelRoutes: Routes = [
       },
       {
         path: 'users',
-        loadChildren: () => import('../modules/users/users-module.routes').then(m => m.usersModuleRoutes)
+        loadChildren: () => import('../modules/users/users-module.routes').then(m => m.generateUsersModuleRoutes())
       }
     ]
   },
   {
     path: 'auth',
-    loadChildren: () => import('../modules/auth/auth-module.routes').then(m => m.authModuleRoutes)
+    loadChildren: () => import('../modules/auth/auth-module.routes').then(m => m.generateAuthModuleRoutes())
   },
   {
     path: '**',
     redirectTo: 'auth'
   }
-]
+];
+
+export async function generateAdminPanelRoutes(config?: any) {
+
+  let routesToReturn = [...adminPanelRoutes]
+
+  if(!config?.isActive) {
+    routesToReturn = routesToReturn.filter((r) => r.path !== 'auth')
+  }
+
+  return routesToReturn;
+}

@@ -11,3 +11,8 @@ export const authModuleRoutes: Routes = [
     loadChildren: () => import('./features/login/login.routes').then(m => m.loginRoutes)
   }
 ]
+
+export async function generateAuthModuleRoutes() {
+  return authModuleRoutes;
+}
+

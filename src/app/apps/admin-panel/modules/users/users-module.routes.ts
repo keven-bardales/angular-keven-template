@@ -11,3 +11,7 @@ export const usersModuleRoutes: Routes = [
     loadChildren: () => import('./features/user-management/user-management.routes').then(m => m.userManagementRoutes)
   }
 ]
+
+export async function generateUsersModuleRoutes() {
+  return usersModuleRoutes;
+}
