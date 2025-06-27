@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, Router } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -7,9 +7,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { map, shareReplay, takeUntil } from 'rxjs/operators';
 import { NavigationItem } from '../../../types/navigation/navigation-item.type';
+import { NavigationService } from '../../../services/navigation/navigation-service/navigation-service-impl.service';
 
 @Component({
   selector: 'app-admin-layout',
@@ -213,11 +214,17 @@ import { NavigationItem } from '../../../types/navigation/navigation-item.type';
     }
   `]
 })
-export class AdminLayout implements OnInit {
-  private breakpointObserver = new BreakpointObserver();
+export class AdminLayout implements OnInit { private breakpointObserver = new BreakpointObserver();
+  private destroy$ = new Subject<void>();
+
+  private navigationService = inject(NavigationService);
+  private router = inject(Router);
 
   // Reactive state para el sidenav
   public sidenavOpened = signal(true);
+
+  // Navigation items from service
+  public navigationItems: NavigationItem[] = [];
 
   // Observable para detectar dispositivos móviles
   public isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -226,127 +233,41 @@ export class AdminLayout implements OnInit {
       shareReplay()
     );
 
-  // Navigation items definidos como clases
-  public navigationItems: NavigationItem[] = [
-    new NavigationItem({ type: 'section', label: 'Principal' }),
-
-    new NavigationItem({
-      type: 'itemWithIcon',
-      label: 'Dashboard',
-      icon: 'dashboard',
-      route: '/admin/dashboard'
-    }),
-
-    new NavigationItem({
-      type: 'itemWithIcon',
-      label: 'Usuarios',
-      icon: 'people',
-      children: [
-        new NavigationItem({
-          type: 'item',
-          label: 'Lista de Usuarios',
-          route: '/admin/users'
-        }),
-        new NavigationItem({
-          type: 'item',
-          label: 'Crear Usuario',
-          route: '/admin/users/create'
-        }),
-        new NavigationItem({
-          type: 'item',
-          label: 'Roles',
-          route: '/admin/users/roles'
-        })
-      ]
-    }),
-
-    new NavigationItem({ type: 'section', label: 'Gestión' }),
-
-    new NavigationItem({
-      type: 'itemWithIcon',
-      label: 'Productos',
-      icon: 'inventory',
-      children: [
-        new NavigationItem({
-          type: 'item',
-          label: 'Catálogo',
-          route: '/admin/products'
-        }),
-        new NavigationItem({
-          type: 'item',
-          label: 'Categorías',
-          route: '/admin/products/categories'
-        }),
-        new NavigationItem({
-          type: 'item',
-          label: 'Inventario',
-          route: '/admin/products/inventory',
-        })
-      ]
-    }),
-
-    new NavigationItem({
-      type: 'itemWithIcon',
-      label: 'Ventas',
-      icon: 'shopping_cart',
-      children: [
-        new NavigationItem({
-          type: 'item',
-          label: 'Órdenes',
-          route: '/admin/sales/orders'
-        }),
-        new NavigationItem({
-          type: 'item',
-          label: 'Reportes',
-          route: '/admin/sales/reports'
-        })
-      ]
-    }),
-
-    new NavigationItem({ type: 'section', label: 'Configuración' }),
-
-    new NavigationItem({
-      type: 'itemWithIcon',
-      label: 'Configuración',
-      icon: 'settings',
-      children: [
-        new NavigationItem({
-          type: 'item',
-          label: 'General',
-          route: '/admin/settings/general'
-        }),
-        new NavigationItem({
-          type: 'item',
-          label: 'Seguridad',
-          route: '/admin/settings/security'
-        }),
-        new NavigationItem({
-          type: 'item',
-          label: 'Integraciones',
-          route: '/admin/settings/integrations',
-          hidden: () => {
-            // Ejemplo de función para hidden
-            return false; // Aquí puedes poner lógica condicional
-          }
-        })
-      ]
-    }),
-
-    new NavigationItem({
-      type: 'itemWithIcon',
-      label: 'Ayuda',
-      icon: 'help',
-      route: '/admin/help'
-    })
-  ];
-
-  constructor(private router: Router) {}
-
   ngOnInit(): void {
+    // Subscribe to navigation items from service
+    this.navigationService.navigationItems$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(items => {
+        this.navigationItems = items;
+      });
+
     // Ajustar el estado inicial del sidenav basado en el tamaño de pantalla
-    this.isHandset$.subscribe(isHandset => {
-      this.sidenavOpened.set(!isHandset);
-    });
+    this.isHandset$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(isHandset => {
+        this.sidenavOpened.set(!isHandset);
+      });
+
+    // Load navigation items (optional, they're already loaded by default)
+    this.loadNavigationItems();
+  }
+
+  ngOnDestroy(): void {
+    // Clean up subscriptions
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  /**
+   * Loads navigation items from the service
+   * @private
+   */
+  private async loadNavigationItems(): Promise<void> {
+    try {
+      await this.navigationService.loadNavigationItems();
+    } catch (error) {
+      console.error('Error loading navigation items in component:', error);
+    }
   }
 
   public onSidenavToggle(opened: boolean): void {
