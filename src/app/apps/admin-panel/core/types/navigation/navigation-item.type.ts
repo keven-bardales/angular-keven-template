@@ -1,9 +1,10 @@
 import { generateUUID } from "@core/utils/generate-uuid/generate-uuid";
+import { BaseItem } from "../base-item/base-item.interface";
 
 type NavigationItemType = 'section' | 'itemWithIcon' | 'item';
 
-export class NavigationItem {
-  public readonly uuid: string = generateUUID();
+
+export class NavigationItem extends BaseItem {
   public type: NavigationItemType;
   public label: string;
   public icon?: string;
@@ -19,6 +20,7 @@ export class NavigationItem {
     hidden?: NavigationItem['hidden'];
     route?: NavigationItem['route'];
   }) {
+    super();
     this.type = params.type;
     this.label = params.label;
     this.icon = params.icon;
