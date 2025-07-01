@@ -31,9 +31,6 @@ export async function generateAdminPanelRoutes(config?: any) {
 
   let routesToReturn = [...adminPanelRoutes]
 
-  if(!config?.isActive) {
-    routesToReturn = routesToReturn.filter((r) => r.path !== 'auth')
-  }
 
   return routesToReturn;
 }
