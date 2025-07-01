@@ -1,1 +1,141 @@
-<p>login-page works!</p>
+<!-- src/app/apps/admin-panel/modules/auth/features/login/pages/login-page/login-page.html -->
+<div class="login-container">
+  <div class="login-wrapper">
+    <!-- Login Card -->
+    <mat-card class="login-card">
+      <mat-card-header>
+        <div class="login-header">
+          <h1 class="login-title">Welcome Back</h1>
+          <p class="login-subtitle">Sign in to your account</p>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content>
+        <!-- Demo Credentials Section -->
+        <div class="demo-section" *ngIf="showDemoCredentials()">
+          <div class="demo-header">
+            <h3>Demo Credentials</h3>
+            <button
+              mat-icon-button
+              (click)="toggleDemoCredentials()"
+              class="close-demo-btn">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+
+          <div class="demo-credentials">
+            <div
+              *ngFor="let cred of demoCredentials"
+              class="demo-credential-item"
+              (click)="fillDemoCredentials(cred)">
+              <div class="credential-info">
+                <strong>{{ cred.role }}</strong>
+                <div class="credential-details">
+                  <span>{{ cred.email }}</span>
+                  <span>{{ cred.password }}</span>
+                </div>
+              </div>
+              <mat-icon>login</mat-icon>
+            </div>
+          </div>
+        </div>
+
+        <!-- Show Demo Button when hidden -->
+        <div class="show-demo-section" *ngIf="!showDemoCredentials()">
+          <button
+            mat-stroked-button
+            color="primary"
+            (click)="toggleDemoCredentials()"
+            class="show-demo-btn">
+            <mat-icon>info</mat-icon>
+            Show Demo Credentials
+          </button>
+        </div>
+
+        <!-- Login Form -->
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+          <!-- Email Field -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              formControlName="email"
+              type="email"
+              placeholder="Enter your email"
+              autocomplete="email">
+            <mat-icon matSuffix>email</mat-icon>
+            <mat-error *ngIf="hasFieldError('email')">
+              {{ getFieldError('email') }}
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Password Field -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              formControlName="password"
+              [type]="hidePassword() ? 'password' : 'text'"
+              placeholder="Enter your password"
+              autocomplete="current-password">
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="togglePasswordVisibility()"
+              type="button"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hidePassword()">
+              <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="hasFieldError('password')">
+              {{ getFieldError('password') }}
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Remember Me -->
+          <div class="form-options">
+            <mat-checkbox formControlName="rememberMe" color="primary">
+              Remember me
+            </mat-checkbox>
+
+            <button
+              type="button"
+              mat-button
+              color="primary"
+              (click)="navigateToForgotPassword()"
+              class="forgot-password-link">
+              Forgot password?
+            </button>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            class="login-btn full-width"
+            [disabled]="isSubmitting()">
+
+            <span *ngIf="!isSubmitting()">Sign In</span>
+
+            <div *ngIf="isSubmitting()" class="loading-content">
+              <mat-spinner [diameter]="20"></mat-spinner>
+              <span>Signing in...</span>
+            </div>
+          </button>
+        </form>
+
+        <!-- Register Link -->
+        <div class="register-section">
+          <p>Don't have an account?</p>
+          <button
+            mat-button
+            color="primary"
+            (click)="navigateToRegister()">
+            Create Account
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

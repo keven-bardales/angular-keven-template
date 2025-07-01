@@ -1,0 +1,245 @@
+/* src/app/apps/admin-panel/modules/auth/features/login/pages/login-page/login-page.scss */
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+}
+
+.login-wrapper {
+  width: 100%;
+  max-width: 450px;
+}
+
+.login-card {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+
+  mat-card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 32px 24px;
+    margin: -24px -24px 24px -24px;
+
+    .login-header {
+      text-align: center;
+      width: 100%;
+
+      .login-title {
+        margin: 0;
+        font-size: 28px;
+        font-weight: 600;
+      }
+
+      .login-subtitle {
+        margin: 8px 0 0 0;
+        opacity: 0.9;
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.demo-section {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+
+  .demo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+
+    h3 {
+      margin: 0;
+      color: #495057;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .close-demo-btn {
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+    }
+  }
+
+  .demo-credentials {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .demo-credential-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      background: white;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        border-color: #007bff;
+        box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
+        transform: translateY(-1px);
+      }
+
+      .credential-info {
+        flex: 1;
+
+        strong {
+          display: block;
+          color: #212529;
+          margin-bottom: 4px;
+          font-size: 14px;
+        }
+
+        .credential-details {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+
+          span {
+            font-size: 12px;
+            color: #6c757d;
+            font-family: 'Courier New', monospace;
+          }
+        }
+      }
+
+      mat-icon {
+        color: #007bff;
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+.show-demo-section {
+  text-align: center;
+  margin-bottom: 24px;
+
+  .show-demo-btn {
+    border-color: #007bff;
+    color: #007bff;
+
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .full-width {
+    width: 100%;
+  }
+
+  .form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 8px 0;
+
+    .forgot-password-link {
+      font-size: 14px;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .login-btn {
+    height: 48px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    margin-top: 8px;
+
+    .loading-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      span {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.register-section {
+  text-align: center;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
+
+  p {
+    margin: 0 0 8px 0;
+    color: #6c757d;
+    font-size: 14px;
+  }
+}
+
+// Responsive design
+@media (max-width: 480px) {
+  .login-container {
+    padding: 16px;
+  }
+
+  .login-card {
+    mat-card-header {
+      padding: 24px 20px;
+      margin: -20px -20px 20px -20px;
+
+      .login-title {
+        font-size: 24px;
+      }
+
+      .login-subtitle {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .demo-section {
+    .demo-credentials {
+      .demo-credential-item {
+        .credential-info {
+          .credential-details {
+            span {
+              font-size: 11px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Material theme overrides
+::ng-deep {
+  .success-snackbar {
+    background-color: #4caf50 !important;
+    color: white !important;
+  }
+
+  .error-snackbar {
+    background-color: #f44336 !important;
+    color: white !important;
+  }
+}

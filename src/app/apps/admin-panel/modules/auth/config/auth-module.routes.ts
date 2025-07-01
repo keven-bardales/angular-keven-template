@@ -8,7 +8,7 @@ export const authModuleRoutes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./features/login/login.routes').then(m => m.loginRoutes)
+    loadChildren: () => import('./../features/login/login.routes').then(m => m.loginRoutes)
   }
 ]
 
