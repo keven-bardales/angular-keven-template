@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, shareReplay, take, takeUntil, tap } from 'rxjs';
 import { NavigationItem } from '../../../types/navigation/navigation-item.type';
 import { INavigationService } from './navigation-service.interface';
 
@@ -36,17 +36,19 @@ export class NavigationService implements INavigationService {
 
   /**
    * Loads navigation items from the data source
-   * @returns Promise that resolves with the loaded navigation items
+   * @returns Observable that emits the loaded navigation items
    */
-  public async loadNavigationItems(): Promise<NavigationItem[]> {
+  public loadNavigationItems(): Observable<NavigationItem[]> {
     try {
       // Simulate async loading (replace with actual API call)
-      const items = await this.fetchNavigationItemsFromSource();
-
-      // Update the subject with new items
-      this.navigationItemsSubject.next(items);
-
-      return items;
+      return this.fetchNavigationItemsFromSource()
+        .pipe(
+          shareReplay(1),
+          take(1),
+          tap(items => {
+            this.navigationItemsSubject.next(items);
+          })
+        );
     } catch (error) {
       console.error('Error loading navigation items:', error);
       throw error;
@@ -90,17 +92,17 @@ export class NavigationService implements INavigationService {
           new NavigationItem({
             type: 'item',
             label: 'User List',
-            route: '/admin/users'
+            route: '/admin-panel/users/user-management/list'
           }),
           new NavigationItem({
             type: 'item',
             label: 'Create User',
-            route: '/admin/users/create'
+            route: '/admin-panel/users/create-user'
           }),
           new NavigationItem({
             type: 'item',
             label: 'Roles & Permissions',
-            route: '/admin/users/roles'
+            route: '/admin-panel/users/roles'
           })
         ]
       }),
@@ -111,18 +113,15 @@ export class NavigationService implements INavigationService {
    * Simulates fetching navigation items from an external source
    * Replace this method with actual API calls to your backend
    * @private
-   * @returns Promise that resolves with navigation items
+   * @returns Observable that emits navigation items
    */
-  private async fetchNavigationItemsFromSource(): Promise<NavigationItem[]> {
+  private fetchNavigationItemsFromSource(): Observable<NavigationItem[]> {
     // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // In a real implementation, this would be an HTTP call to your API
-    // Example:
-    // const response = await this.http.get<NavigationItemDto[]>('/api/navigation').toPromise();
-    // return response.map(dto => this.mapDtoToNavigationItem(dto));
-
-    // For now, return the default items
-    return this.createDefaultNavigationItems();
+    return new Observable<NavigationItem[]>(observer => {
+      setTimeout(() => {
+        observer.next(this.createDefaultNavigationItems());
+        observer.complete();
+      }, 1000);
+    });
   }
 }

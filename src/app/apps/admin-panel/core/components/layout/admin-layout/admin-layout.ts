@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet, Router } from '@angular/router';
+import { RouterOutlet, Router, RouterLink } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
@@ -22,7 +22,8 @@ import { NavigationService } from '../../../services/navigation/navigation-servi
     MatListModule,
     MatIconModule,
     MatButtonModule,
-    MatToolbarModule
+    MatToolbarModule,
+    RouterLink
   ],
   template: `
     <mat-sidenav-container class="sidenav-container" [style.marginTop.px]="0">
@@ -53,7 +54,8 @@ import { NavigationService } from '../../../services/navigation/navigation-servi
                   <mat-list-item
                     class="nav-item"
                     [class.nav-item-active]="isActiveRoute(item.route)"
-                    (click)="navigateToRoute(item.route)">
+                    [routerLink]="item.route"
+                    >
                     <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
                     <span matListItemTitle>{{ item.label }}</span>
                   </mat-list-item>
@@ -66,7 +68,7 @@ import { NavigationService } from '../../../services/navigation/navigation-servi
                           <mat-list-item
                             class="nav-child-item"
                             [class.nav-item-active]="isActiveRoute(child.route)"
-                            (click)="navigateToRoute(child.route)">
+                            [routerLink]="child.route">
                             @if (child.icon) {
                               <mat-icon matListItemIcon>{{ child.icon }}</mat-icon>
                             }
@@ -83,7 +85,7 @@ import { NavigationService } from '../../../services/navigation/navigation-servi
                   <mat-list-item
                     class="nav-item nav-simple-item"
                     [class.nav-item-active]="isActiveRoute(item.route)"
-                    (click)="navigateToRoute(item.route)">
+                    [routerLink]="item.route">
                     <span matListItemTitle>{{ item.label }}</span>
                   </mat-list-item>
                 }
@@ -264,7 +266,7 @@ export class AdminLayout implements OnInit { private breakpointObserver = new Br
    */
   private async loadNavigationItems(): Promise<void> {
     try {
-      await this.navigationService.loadNavigationItems();
+      this.navigationService.loadNavigationItems();
     } catch (error) {
       console.error('Error loading navigation items in component:', error);
     }

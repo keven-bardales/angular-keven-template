@@ -8,7 +8,7 @@ export const usersModuleRoutes: Routes = [
   },
   {
     path: 'user-management',
-    loadChildren: () => import('./features/user-management/user-management.routes').then(m => m.userManagementRoutes)
+    loadChildren: () => import('../features/user-management/user-management.routes').then(m => m.userManagementRoutes)
   }
 ]
 

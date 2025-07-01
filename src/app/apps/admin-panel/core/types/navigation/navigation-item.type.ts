@@ -1,5 +1,4 @@
-import { generateUUID } from "@core/utils/generate-uuid/generate-uuid";
-import { BaseItem } from "../base-item/base-item.interface";
+import { BaseItem } from "../base-item/base-item.type";
 
 type NavigationItemType = 'section' | 'itemWithIcon' | 'item';
 

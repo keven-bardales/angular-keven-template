@@ -20,9 +20,9 @@ export interface INavigationService {
 
   /**
    * Loads navigation items from the data source
-   * @returns Promise that resolves with the loaded navigation items
+   * @returns Observable that emits the loaded navigation items
    */
-  loadNavigationItems(): Promise<NavigationItem[]>;
+  loadNavigationItems(): Observable<NavigationItem[]>;
 
   /**
    * Manually sets the navigation items

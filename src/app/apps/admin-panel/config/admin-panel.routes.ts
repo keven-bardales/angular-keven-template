@@ -13,7 +13,7 @@ export const adminPanelRoutes: Routes = [
       },
       {
         path: 'users',
-        loadChildren: () => import('../modules/users/users-module.routes').then(m => m.generateUsersModuleRoutes())
+        loadChildren: () => import('../modules/users/config/users-module.routes').then(m => m.generateUsersModuleRoutes())
       }
     ]
   },

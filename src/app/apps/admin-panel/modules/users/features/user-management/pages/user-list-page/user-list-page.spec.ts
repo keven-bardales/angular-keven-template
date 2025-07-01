@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserManagementPage } from './user-management-page';
+import { UserManagementPage } from './user-list-page';
 
 describe('UserManagementPage', () => {
   let component: UserManagementPage;
