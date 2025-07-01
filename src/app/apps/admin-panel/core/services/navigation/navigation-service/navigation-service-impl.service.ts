@@ -82,14 +82,6 @@ export class NavigationService implements INavigationService {
         type: 'section',
         label: 'Principal'
       }),
-
-      new NavigationItem({
-        type: 'itemWithIcon',
-        label: 'Dashboard',
-        icon: 'dashboard',
-        route: '/admin/dashboard'
-      }),
-
       new NavigationItem({
         type: 'itemWithIcon',
         label: 'Users',
