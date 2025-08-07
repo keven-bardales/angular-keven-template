@@ -11,8 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
-import { AuthServiceToken, AuthServiceTokenValue } from '../../../../services/auth-service';
 import { LoginCredentials } from '../../../../types/login-credentials/login-credentials.type';
+import { IAuthService } from '../../../../services/auth-service/auth-service.inteface';
 
 @Component({
   selector: 'app-login-page',
@@ -34,7 +34,7 @@ import { LoginCredentials } from '../../../../types/login-credentials/login-cred
 })
 export class LoginPage {
   private readonly fb = inject(FormBuilder);
-  private readonly authService = inject(AuthServiceToken);
+  private readonly authService = inject(IAuthService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly snackBar = inject(MatSnackBar);
