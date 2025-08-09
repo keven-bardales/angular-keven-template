@@ -1,0 +1,37 @@
+# Build & dependencies
+node_modules/
+dist/
+out/
+tmp/
+
+# Angular cache
+.angular/
+.angular/cache/
+
+# Test outputs
+coverage/
+*.spec.ts
+*.test.ts
+**/__tests__/**
+
+# Environments & secrets
+src/environments/*.ts
+!.src/environments/environment.example.ts
+
+# Assets (unless needed)
+src/assets/**/*.{png,jpg,jpeg,webp,gif,svg,ico}
+src/assets/**/*.mp4
+src/assets/**/*.mp3
+src/assets/**/*.pdf
+
+# IDE & system
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Other generated
+*.min.*

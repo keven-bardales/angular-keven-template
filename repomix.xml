@@ -1,0 +1,1555 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+The content has been processed where comments have been removed, empty lines have been removed, content has been compressed (code blocks are separated by ⋮---- delimiter).
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Code comments have been removed from supported file types
+- Empty lines have been removed from all files
+- Content has been compressed - code blocks are separated by ⋮---- delimiter
+- Long base64 data strings (e.g., data:image/png;base64,...) have been truncated to reduce token count
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+.editorconfig
+.gitattributes
+.github/workflows/ci.yml
+.gitignore
+.postcssrc.json
+.repomixignore
+add-gitkeep.sh
+angular.json
+CLAUDE.md
+package.json
+README.md
+repomix.cofing.json
+src/app/app.config.ts
+src/app/app.html
+src/app/app.routes.ts
+src/app/app.ts
+src/app/apps/admin-panel/config/admin-panel.providers.ts
+src/app/apps/admin-panel/config/admin-panel.routes.ts
+src/app/apps/admin-panel/core/components/layout/admin-layout/admin-layout.ts
+src/app/apps/admin-panel/core/config/admin-panel-core-providers.ts
+src/app/apps/admin-panel/core/services/navigation/navigation-service/index.ts
+src/app/apps/admin-panel/core/services/navigation/navigation-service/navigation-service-impl.service.ts
+src/app/apps/admin-panel/core/services/navigation/navigation-service/navigation-service.interface.ts
+src/app/apps/admin-panel/core/types/base-item/base-item.type.ts
+src/app/apps/admin-panel/core/types/navigation/navigation-item.type.ts
+src/app/apps/admin-panel/modules/auth/config/auth-module.providers.ts
+src/app/apps/admin-panel/modules/auth/config/auth-module.routes.ts
+src/app/apps/admin-panel/modules/auth/features/login/login.routes.ts
+src/app/apps/admin-panel/modules/auth/features/login/pages/login-page/login-page.html
+src/app/apps/admin-panel/modules/auth/features/login/pages/login-page/login-page.routes.ts
+src/app/apps/admin-panel/modules/auth/features/login/pages/login-page/login-page.scss
+src/app/apps/admin-panel/modules/auth/features/login/pages/login-page/login-page.ts
+src/app/apps/admin-panel/modules/auth/guards/auth-child-guard/auth-child-guard.ts
+src/app/apps/admin-panel/modules/auth/guards/auth-guard/auth-guard.ts
+src/app/apps/admin-panel/modules/auth/guards/guest-guard/guest-guard.ts
+src/app/apps/admin-panel/modules/auth/services/auth-service/auth-service.inteface.ts
+src/app/apps/admin-panel/modules/auth/services/auth-service/index.ts
+src/app/apps/admin-panel/modules/auth/services/auth-service/mock-auth.service.ts
+src/app/apps/admin-panel/modules/auth/types/auth-error/auth-error.type.ts
+src/app/apps/admin-panel/modules/auth/types/auth-response/auth-response.type.ts
+src/app/apps/admin-panel/modules/auth/types/auth-state/auth-state.type.ts
+src/app/apps/admin-panel/modules/auth/types/authTokens/authToken.type.ts
+src/app/apps/admin-panel/modules/auth/types/baseUser/base-user.type.ts
+src/app/apps/admin-panel/modules/auth/types/change-password-request/change-password-request.type.ts
+src/app/apps/admin-panel/modules/auth/types/logged-in-user/logged-in-user.type.ts
+src/app/apps/admin-panel/modules/auth/types/login-credentials/login-credentials.type.ts
+src/app/apps/admin-panel/modules/auth/types/register-user-request/register-user-request.type.ts
+src/app/apps/admin-panel/modules/auth/types/reset-password-confirm/reset-password-confirm.type.ts
+src/app/apps/admin-panel/modules/auth/types/reset-password-request/reset-password-request.type.ts
+src/app/apps/admin-panel/modules/auth/types/userPermission/userPermission.type.ts
+src/app/apps/admin-panel/modules/auth/types/userRole/userRole.type.ts
+src/app/apps/admin-panel/modules/users/config/user-module.providers.ts
+src/app/apps/admin-panel/modules/users/config/users-module.routes.ts
+src/app/apps/admin-panel/modules/users/features/user-management/pages/user-list-page/user-list-page.html
+src/app/apps/admin-panel/modules/users/features/user-management/pages/user-list-page/user-list-page.routes.ts
+src/app/apps/admin-panel/modules/users/features/user-management/pages/user-list-page/user-list-page.ts
+src/app/apps/admin-panel/modules/users/features/user-management/services/user/index.ts
+src/app/apps/admin-panel/modules/users/features/user-management/services/user/user-api.service.ts
+src/app/apps/admin-panel/modules/users/features/user-management/services/user/user-mock.service.ts
+src/app/apps/admin-panel/modules/users/features/user-management/services/user/user-service.interface.ts
+src/app/apps/admin-panel/modules/users/features/user-management/types/user/user.type.ts
+src/app/apps/admin-panel/modules/users/features/user-management/user-management.routes.ts
+src/app/core/utils/generate-uuid/generate-uuid.ts
+src/index.html
+src/main.ts
+src/styles.scss
+tsconfig.app.json
+tsconfig.json
+tsconfig.spec.json
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path=".repomixignore">
+# Build & dependencies
+node_modules/
+dist/
+out/
+tmp/
+
+# Angular cache
+.angular/
+.angular/cache/
+
+# Test outputs
+coverage/
+*.spec.ts
+*.test.ts
+**/__tests__/**
+
+# Environments & secrets
+src/environments/*.ts
+!.src/environments/environment.example.ts
+
+# Assets (unless needed)
+src/assets/**/*.{png,jpg,jpeg,webp,gif,svg,ico}
+src/assets/**/*.mp4
+src/assets/**/*.mp3
+src/assets/**/*.pdf
+
+# IDE & system
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Other generated
+*.min.*
+</file>
+
+<file path="repomix.cofing.json">
+{
+  "output": {
+    "style": "xml",
+    "filePath": "repomix.xml",
+    "compress": true,
+    "removeComments": true,
+    "removeEmptyLines": true,
+    "truncateBase64": true
+  },
+  "ignore": {
+    "useDefaultPatterns": true,
+    "useGitignore": true,
+    "custom_patterns": [
+      "dist/",
+      "node_modules/",
+      "*.spec.ts",
+      "*.test.ts",
+      "coverage/",
+      ".angular/",
+      "src/assets/**/*.{png,jpg,jpeg,webp,gif,svg,ico,mp4,mp3,pdf}"
+    ]
+  },
+  "headerText": "This XML was generated by Repomix from an Angular project. It contains only core app code and configuration relevant for LLM analysis.",
+  "instructionFilePath": "repomix-instructions.md"
+}
+</file>
+
+<file path=".editorconfig">
+# Editor configuration, see https://editorconfig.org
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.ts]
+quote_type = single
+ij_typescript_use_double_quotes = false
+
+[*.md]
+max_line_length = off
+trim_trailing_whitespace = false
+</file>
+
+<file path=".gitattributes">
+# Auto detect text files and perform LF normalization
+* text=auto
+</file>
+
+<file path=".github/workflows/ci.yml">
+name: Frontend CI
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  test-frontend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+        cache: 'npm'
+    - name: Install dependencies
+      run: npm ci
+    - name: Run linter
+      run: npm run lint
+    - name: Run tests
+      run: npm test -- --watch=false --browsers=ChromeHeadless
+    - name: Build
+      run: npm run build
+</file>
+
+<file path=".gitignore">
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+
+# Compiled output
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
+# Node
+/node_modules
+npm-debug.log
+yarn-error.log
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+
+# System files
+.DS_Store
+Thumbs.db
+</file>
+
+<file path=".postcssrc.json">
+{
+  "plugins": {
+    "@tailwindcss/postcss": {}
+  }
+}
+</file>
+
+<file path="add-gitkeep.sh">
+BASE_DIR="./src/app"
+find "$BASE_DIR" -type d -empty -exec touch {}/.gitkeep \;
+echo "✅ Se han agregado archivos .gitkeep en las carpetas vacías dentro de $BASE_DIR."
+</file>
+
+<file path="CLAUDE.md">
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Development Commands
+
+- **Start dev server**: `npm start` or `ng serve` (runs on http://localhost:4200)
+- **Build**: `npm run build` or `ng build` (outputs to `dist/`)
+- **Test**: `npm test` or `ng test` (runs Karma/Jasmine tests)
+- **Watch build**: `npm run watch` or `ng build --watch --configuration development`
+
+## Project Architecture
+
+This is an Angular 20 application using a modular architecture pattern with apps/modules structure:
+
+### Core Structure
+- **Main app**: Located in `src/app/` with zoneless change detection enabled
+- **Admin Panel**: Primary application module in `src/app/apps/admin-panel/`
+- **Routing**: Uses lazy-loaded modules with route generation functions
+
+### Module Organization
+Each module follows a consistent structure:
+```
+modules/[module-name]/
+  ├── components/
+  ├── config/
+  │   ├── [module].providers.ts
+  │   └── [module].routes.ts
+  ├── features/
+  │   └── [feature-name]/
+  │       ├── components/
+  │       ├── pages/
+  │       ├── services/
+  │       └── types/
+  ├── guards/
+  ├── services/
+  └── types/
+```
+
+### Key Modules
+- **Auth Module**: Handles authentication with guards (authGuard, authChildGuard, guestGuard)
+- **Users Module**: User management functionality
+- **Core**: Shared layout components and navigation services
+
+### Authentication Flow
+- Uses route guards to protect authenticated routes
+- Guest guard prevents authenticated users from accessing auth pages
+- Auth service with mock implementation for development
+
+### Technology Stack
+- Angular 20 with Angular Material
+- TailwindCSS for styling
+- SCSS for component styles
+- RxJS for reactive programming
+- Karma/Jasmine for testing
+
+### Service Pattern
+Services follow interface/implementation pattern:
+- Interface definitions in `[service].interface.ts`
+- Mock implementations for development
+- Index file for clean imports
+
+### Route Generation
+Uses dynamic route generation functions (`generateAdminPanelRoutes()`, `generateUsersModuleRoutes()`) allowing for configuration-based routing.
+</file>
+
+<file path="src/app/apps/admin-panel/core/config/admin-panel-core-providers.ts">
+import { Provider } from "@angular/core";
+import { navigationServiceProvider } from "../services/navigation/navigation-service/index";
+⋮----
+export const provideAdminPanelCoreProviders = () =>
+</file>
+
+<file path="src/app/apps/admin-panel/core/services/navigation/navigation-service/index.ts">
+import { InjectionToken, Provider } from "@angular/core";
+import { NavigationService } from "./navigation-service-impl.service";
+export enum NavigationServiceTokenValue {
+  NavigationServiceToken = 'NavigationService'
+}
+</file>
+
+<file path="src/app/apps/admin-panel/core/types/base-item/base-item.type.ts">
+import { generateUUID } from "@core/utils/generate-uuid/generate-uuid";
+export class BaseItem
+⋮----
+constructor(uuid?: string)
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/config/auth-module.providers.ts">
+import { Provider } from "@angular/core";
+import { authServiceProvider } from "../services/auth-service";
+⋮----
+export const provideAuthModuleProviders = () =>
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/config/auth-module.routes.ts">
+import { Routes } from "@angular/router";
+⋮----
+export async function generateAuthModuleRoutes()
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/features/login/pages/login-page/login-page.routes.ts">
+import { Routes } from "@angular/router";
+import { LoginPage } from "./login-page";
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/guards/auth-child-guard/auth-child-guard.ts">
+import { CanActivateChildFn } from "@angular/router";
+import { authGuard } from "../auth-guard/auth-guard";
+export const authChildGuard: CanActivateChildFn = (childRoute, state) =>
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/services/auth-service/auth-service.inteface.ts">
+import { Observable } from 'rxjs';
+import { Signal } from '@angular/core';
+import { LoginCredentials } from '../../types/login-credentials/login-credentials.type';
+import { AuthResponse } from '../../types/auth-response/auth-response.type';
+import { RegisterUserRequest } from '../../types/register-user-request/register-user-request.type';
+import { ResetPasswordRequest } from '../../types/reset-password-request/reset-password-request.type';
+import { ResetPasswordConfirm } from '../../types/reset-password-confirm/reset-password-confirm.type';
+import { ChangePasswordRequest } from '../../types/change-password-request/change-password-request.type';
+import { AuthTokens } from '../../types/authTokens/authToken.type';
+import { AuthState } from '../../types/auth-state/auth-state.type';
+import { BaseUser } from '../../types/baseUser/base-user.type';
+import { LoggedInUser } from '../../types/logged-in-user/logged-in-user.type';
+export abstract class IAuthService<T extends BaseUser = LoggedInUser>
+⋮----
+abstract login(credentials: LoginCredentials): Observable<AuthResponse<T> | null>;
+abstract logout(): Observable<null>;
+abstract register(userData: RegisterUserRequest): Observable<AuthResponse<T> | null>;
+abstract resetPassword(request: ResetPasswordRequest): Observable<
+abstract confirmResetPassword(request: ResetPasswordConfirm): Observable<
+abstract changePassword(request: ChangePasswordRequest): Observable<
+abstract refreshToken(): Observable<AuthTokens>;
+abstract validateToken(token?: string): Observable<boolean>;
+abstract revokeToken(token?: string): Observable<void>;
+abstract getCurrentUser(): Observable<T | null>;
+abstract refreshUser(): Observable<T | null>;
+abstract updateUserProfile(updates: Partial<T>): Observable<T | null>;
+abstract checkAuthStatus(): Observable<boolean>;
+abstract extendSession(): Observable<AuthTokens | null>;
+abstract getSessionExpiryTime(): Date | null;
+abstract hasRole(roleName: string): boolean;
+abstract hasPermission(permission: string, resource?: string): boolean;
+abstract hasAnyRole(roleNames: string[]): boolean;
+abstract hasAnyPermission(permissions: string[], resource?: string): boolean;
+abstract clearAuthData(): void;
+abstract saveAuthData(response: AuthResponse<T>): void;
+abstract getStoredTokens(): AuthTokens | null;
+abstract verifyTwoFactor?(code: string, token: string): Observable<AuthResponse<T>>;
+abstract enableTwoFactor?(): Observable<
+abstract disableTwoFactor?(password: string): Observable<
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/services/auth-service/mock-auth.service.ts">
+import { Injectable, computed, signal } from '@angular/core';
+import { Observable, of, throwError, delay, tap } from 'rxjs';
+import { LoggedInUser } from '../../types/logged-in-user/logged-in-user.type';
+import { IAuthService } from './auth-service.inteface';
+import { AuthState } from '../../types/auth-state/auth-state.type';
+import { AuthError } from '../../types/auth-error/auth-error.type';
+import { AuthTokens } from '../../types/authTokens/authToken.type';
+import { LoginCredentials } from '../../types/login-credentials/login-credentials.type';
+import { AuthResponse } from '../../types/auth-response/auth-response.type';
+import { RegisterUserRequest } from '../../types/register-user-request/register-user-request.type';
+import { ResetPasswordRequest } from '../../types/reset-password-request/reset-password-request.type';
+import { ResetPasswordConfirm } from '../../types/reset-password-confirm/reset-password-confirm.type';
+import { ChangePasswordRequest } from '../../types/change-password-request/change-password-request.type';
+⋮----
+export class MockAuthService extends IAuthService<LoggedInUser>
+⋮----
+constructor()
+private initializeFromStorage(): void
+private updateAuthState(updates: Partial<AuthState<LoggedInUser>>): void
+private setLoading(loading: boolean): void
+private setError(error: AuthError | null): void
+private generateMockTokens(): AuthTokens
+login(credentials: LoginCredentials): Observable<AuthResponse<LoggedInUser> | null>
+logout(): Observable<null>
+register(userData: RegisterUserRequest): Observable<AuthResponse<LoggedInUser> | null>
+resetPassword(request: ResetPasswordRequest): Observable<
+confirmResetPassword(request: ResetPasswordConfirm): Observable<
+changePassword(request: ChangePasswordRequest): Observable<
+refreshToken(): Observable<AuthTokens>
+validateToken(token?: string): Observable<boolean>
+revokeToken(token?: string): Observable<void>
+getCurrentUser(): Observable<LoggedInUser | null>
+refreshUser(): Observable<LoggedInUser | null>
+updateUserProfile(updates: Partial<LoggedInUser>): Observable<LoggedInUser | null>
+checkAuthStatus(): Observable<boolean>
+extendSession(): Observable<AuthTokens | null>
+getSessionExpiryTime(): Date | null
+hasRole(roleName: string): boolean
+hasPermission(permission: string, resource?: string): boolean
+hasAnyRole(roleNames: string[]): boolean
+hasAnyPermission(permissions: string[], resource?: string): boolean
+clearAuthData(): void
+saveAuthData(response: AuthResponse<LoggedInUser>): void
+getStoredTokens(): AuthTokens | null
+override disableTwoFactor(password: string): Observable<
+override enableTwoFactor(): Observable<
+override verifyTwoFactor(code: string, token: string): Observable<AuthResponse<LoggedInUser>>
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/types/auth-error/auth-error.type.ts">
+export interface AuthError {
+  code: string;
+  message: string;
+  details?: Record<string, any>;
+}
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/types/auth-response/auth-response.type.ts">
+import { BaseUser } from "../baseUser/base-user.type";
+import { AuthTokens } from "../authTokens/authToken.type";
+import { LoggedInUser } from "../logged-in-user/logged-in-user.type";
+export interface AuthResponse<T extends BaseUser = LoggedInUser> {
+  user: T;
+  tokens?: AuthTokens;
+  message?: string;
+  requiresTwoFactor?: boolean;
+  twoFactorToken?: string;
+}
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/types/auth-state/auth-state.type.ts">
+import { AuthError } from "../auth-error/auth-error.type";
+import { AuthTokens } from "../authTokens/authToken.type";
+import { BaseUser } from "../baseUser/base-user.type";
+import { LoggedInUser } from "../logged-in-user/logged-in-user.type";
+export interface AuthState<T extends BaseUser = LoggedInUser> {
+  isAuthenticated: boolean;
+  user: T | null;
+  tokens: AuthTokens | null;
+  isLoading: boolean;
+  error: AuthError | null;
+}
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/types/authTokens/authToken.type.ts">
+export interface AuthTokens {
+  accessToken: string;
+  refreshToken: string;
+  expiresAt: Date;
+  tokenType?: string;
+}
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/types/baseUser/base-user.type.ts">
+import { BaseItem } from "app/apps/admin-panel/core/types/base-item/base-item.type";
+import { UserRole } from "../userRole/userRole.type";
+import { UserPermission } from "../userPermission/userPermission.type";
+export abstract class BaseUser extends BaseItem
+⋮----
+constructor(data: Partial<BaseUser> &
+public hasRole(roleName: string): boolean
+public hasPermission(permission: string, resource?: string): boolean
+public hasAnyRole(roleNames: string[]): boolean
+public hasAnyPermission(permissions: string[], resource?: string): boolean
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/types/change-password-request/change-password-request.type.ts">
+export interface ChangePasswordRequest {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/types/logged-in-user/logged-in-user.type.ts">
+import { BaseUser } from "../baseUser/base-user.type";
+export class LoggedInUser extends BaseUser
+⋮----
+constructor(data: Partial<LoggedInUser> &
+public updatePreference(key: string, value: any): void
+public getPreference<T>(key: string, defaultValue?: T): T | undefined
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/types/login-credentials/login-credentials.type.ts">
+export interface LoginCredentials {
+  email: string;
+  password: string;
+  rememberMe?: boolean;
+}
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/types/register-user-request/register-user-request.type.ts">
+export interface RegisterUserRequest {
+  email: string;
+  password: string;
+  fullName: string;
+  phoneNumber?: string;
+  acceptTerms: boolean;
+}
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/types/reset-password-confirm/reset-password-confirm.type.ts">
+export interface ResetPasswordConfirm {
+  token: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/types/reset-password-request/reset-password-request.type.ts">
+export interface ResetPasswordRequest {
+  email: string;
+}
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/types/userPermission/userPermission.type.ts">
+export interface UserPermission {
+  id: string;
+  name: string;
+  resource: string;
+  action: string;
+  description?: string;
+}
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/types/userRole/userRole.type.ts">
+export interface UserRole {
+  id: string;
+  name: string;
+  description?: string;
+}
+</file>
+
+<file path="src/app/apps/admin-panel/modules/users/config/user-module.providers.ts">
+import { Provider } from "@angular/core";
+import { userServiceProvider } from "../features/user-management/services/user/index";
+⋮----
+export const provideUserModuleProviders = () =>
+</file>
+
+<file path="src/app/apps/admin-panel/modules/users/config/users-module.routes.ts">
+import { Routes } from "@angular/router";
+⋮----
+export async function generateUsersModuleRoutes()
+</file>
+
+<file path="src/app/apps/admin-panel/modules/users/features/user-management/pages/user-list-page/user-list-page.html">
+<p>user-management-page works!</p>
+</file>
+
+<file path="src/app/apps/admin-panel/modules/users/features/user-management/pages/user-list-page/user-list-page.routes.ts">
+import { Routes } from "@angular/router";
+import { UserListPage } from "./user-list-page";
+</file>
+
+<file path="src/app/apps/admin-panel/modules/users/features/user-management/pages/user-list-page/user-list-page.ts">
+import { Component, inject, Inject, OnInit } from '@angular/core';
+import { UserToken } from '../../services/user';
+⋮----
+export class UserListPage implements OnInit
+⋮----
+constructor()
+ngOnInit(): void
+</file>
+
+<file path="src/app/apps/admin-panel/modules/users/features/user-management/services/user/index.ts">
+import { InjectionToken, Provider } from "@angular/core";
+import { IUserService } from "./user-service.interface";
+import { UserApiService } from "./user-api.service";
+export enum UserTokenValue {
+  UserToken = 'User'
+};
+</file>
+
+<file path="src/app/apps/admin-panel/modules/users/features/user-management/services/user/user-api.service.ts">
+import { Injectable } from "@angular/core";
+import { IUserService } from "./user-service.interface";
+import { Observable } from "rxjs";
+import { AppUser } from "../../types/user/user.type";
+⋮----
+export class UserApiService implements IUserService
+⋮----
+getAllUsers(): Observable<AppUser[]>
+getUserById(id: string): Observable<AppUser>
+createUser(user: AppUser): Observable<AppUser>
+updateUser(id: string, user: AppUser): Observable<AppUser>
+deleteUser(id: string): Observable<void>
+</file>
+
+<file path="src/app/apps/admin-panel/modules/users/features/user-management/services/user/user-mock.service.ts">
+import { Observable } from "rxjs";
+import { IUserService } from "./user-service.interface";
+import { AppUser } from "../../types/user/user.type";
+import { Injectable } from "@angular/core";
+⋮----
+export class UserMockService implements IUserService
+⋮----
+getAllUsers(): Observable<AppUser[]>
+getUserById(id: string): Observable<AppUser>
+createUser(user: AppUser): Observable<AppUser>
+updateUser(id: string, user: AppUser): Observable<AppUser>
+deleteUser(id: string): Observable<void>
+</file>
+
+<file path="src/app/apps/admin-panel/modules/users/features/user-management/services/user/user-service.interface.ts">
+import { Observable } from "rxjs";
+import { AppUser } from "../../types/user/user.type";
+export interface IUserService {
+  getAllUsers(): Observable<AppUser[]>;
+  getUserById(id: string): Observable<AppUser>;
+  createUser(user: AppUser): Observable<AppUser>;
+  updateUser(id: string, user: AppUser): Observable<AppUser>;
+  deleteUser(id: string): Observable<void>;
+}
+⋮----
+getAllUsers(): Observable<AppUser[]>;
+getUserById(id: string): Observable<AppUser>;
+createUser(user: AppUser): Observable<AppUser>;
+updateUser(id: string, user: AppUser): Observable<AppUser>;
+deleteUser(id: string): Observable<void>;
+</file>
+
+<file path="src/app/apps/admin-panel/modules/users/features/user-management/types/user/user.type.ts">
+import { BaseItem } from "app/apps/admin-panel/core/types/base-item/base-item.type";
+export class AppUser extends BaseItem
+⋮----
+constructor(obj: {
+    fullName: AppUser['fullName'];
+    email: AppUser['email'];
+    role: AppUser['role'];
+    phoneNumber: AppUser['phoneNumber'];
+})
+</file>
+
+<file path="src/app/core/utils/generate-uuid/generate-uuid.ts">
+export function generateUUID(): string
+</file>
+
+<file path="src/main.ts">
+import { bootstrapApplication } from '@angular/platform-browser';
+import { appConfig } from './app/app.config';
+import { App } from './app/app';
+</file>
+
+<file path="tsconfig.app.json">
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/app",
+    "types": []
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "src/**/*.spec.ts"
+  ]
+}
+</file>
+
+<file path="tsconfig.spec.json">
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/spec",
+    "types": [
+      "jasmine"
+    ]
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}
+</file>
+
+<file path="angular.json">
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "angular-keven-template": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "src/main.ts",
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "styles": [
+              "@angular/material/prebuilt-themes/azure-blue.css",
+              "src/styles.scss"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "angular-keven-template:build:production"
+            },
+            "development": {
+              "buildTarget": "angular-keven-template:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular/build:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "styles": [
+              "@angular/material/prebuilt-themes/azure-blue.css",
+              "src/styles.scss"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": "63c4ee87-b1b0-45e7-a5e5-a511afec68f9"
+  }
+}
+</file>
+
+<file path="README.md">
+# AngularKevenTemplate
+
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.3.
+
+## Development server
+
+To start a local development server, run:
+
+```bash
+ng serve
+```
+
+Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+
+## Code scaffolding
+
+Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+
+```bash
+ng generate component component-name
+```
+
+For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+
+```bash
+ng generate --help
+```
+
+## Building
+
+To build the project run:
+
+```bash
+ng build
+```
+
+This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+
+## Running unit tests
+
+To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+
+```bash
+ng test
+```
+
+## Running end-to-end tests
+
+For end-to-end (e2e) testing, run:
+
+```bash
+ng e2e
+```
+
+Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+
+## Additional Resources
+
+For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+</file>
+
+<file path="src/app/app.config.ts">
+import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { routes } from './app.routes';
+import { provideAdminPanelProviders } from './apps/admin-panel/config/admin-panel.providers';
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/features/login/login.routes.ts">
+import { Routes } from "@angular/router";
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/features/login/pages/login-page/login-page.html">
+<div class="login-container">
+  <div class="login-wrapper">
+    <mat-card class="login-card">
+      <mat-card-header>
+        <div class="login-header">
+          <h1 class="login-title">Welcome Back</h1>
+          <p class="login-subtitle">Sign in to your account</p>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="demo-section" *ngIf="showDemoCredentials()">
+          <div class="demo-header">
+            <h3>Demo Credentials</h3>
+            <button
+              mat-icon-button
+              (click)="toggleDemoCredentials()"
+              class="close-demo-btn">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+          <div class="demo-credentials">
+            <div
+              *ngFor="let cred of demoCredentials"
+              class="demo-credential-item"
+              (click)="fillDemoCredentials(cred)">
+              <div class="credential-info">
+                <strong>{{ cred.role }}</strong>
+                <div class="credential-details">
+                  <span>{{ cred.email }}</span>
+                  <span>{{ cred.password }}</span>
+                </div>
+              </div>
+              <mat-icon>login</mat-icon>
+            </div>
+          </div>
+        </div>
+        <div class="show-demo-section" *ngIf="!showDemoCredentials()">
+          <button
+            mat-stroked-button
+            color="primary"
+            (click)="toggleDemoCredentials()"
+            class="show-demo-btn">
+            <mat-icon>info</mat-icon>
+            Show Demo Credentials
+          </button>
+        </div>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              formControlName="email"
+              type="email"
+              placeholder="Enter your email"
+              autocomplete="email">
+            <mat-icon matSuffix>email</mat-icon>
+            <mat-error *ngIf="hasFieldError('email')">
+              {{ getFieldError('email') }}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              formControlName="password"
+              [type]="hidePassword() ? 'password' : 'text'"
+              placeholder="Enter your password"
+              autocomplete="current-password">
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="togglePasswordVisibility()"
+              type="button"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hidePassword()">
+              <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="hasFieldError('password')">
+              {{ getFieldError('password') }}
+            </mat-error>
+          </mat-form-field>
+          <div class="form-options">
+            <mat-checkbox formControlName="rememberMe" color="primary">
+              Remember me
+            </mat-checkbox>
+            <button
+              type="button"
+              mat-button
+              color="primary"
+              (click)="navigateToForgotPassword()"
+              class="forgot-password-link">
+              Forgot password?
+            </button>
+          </div>
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            class="login-btn full-width"
+            [disabled]="isSubmitting()">
+            <span *ngIf="!isSubmitting()">Sign In</span>
+            <div *ngIf="isSubmitting()" class="loading-content">
+              <mat-spinner [diameter]="20"></mat-spinner>
+              <span>Signing in...</span>
+            </div>
+          </button>
+        </form>
+        <div class="register-section">
+          <p>Don't have an account?</p>
+          <button
+            mat-button
+            color="primary"
+            (click)="navigateToRegister()">
+            Create Account
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/features/login/pages/login-page/login-page.scss">
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+}
+.login-wrapper {
+  width: 100%;
+  max-width: 450px;
+}
+.login-card {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  mat-card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 32px 24px;
+    margin: -24px -24px 24px -24px;
+    .login-header {
+      text-align: center;
+      width: 100%;
+      .login-title {
+        margin: 0;
+        font-size: 28px;
+        font-weight: 600;
+      }
+      .login-subtitle {
+        margin: 8px 0 0 0;
+        opacity: 0.9;
+        font-size: 16px;
+      }
+    }
+  }
+}
+.demo-section {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+  .demo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    h3 {
+      margin: 0;
+      color: #495057;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .close-demo-btn {
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+    }
+  }
+  .demo-credentials {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    .demo-credential-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      background: white;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      &:hover {
+        border-color: #007bff;
+        box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
+        transform: translateY(-1px);
+      }
+      .credential-info {
+        flex: 1;
+        strong {
+          display: block;
+          color: #212529;
+          margin-bottom: 4px;
+          font-size: 14px;
+        }
+        .credential-details {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+          span {
+            font-size: 12px;
+            color: #6c757d;
+            font-family: 'Courier New', monospace;
+          }
+        }
+      }
+      mat-icon {
+        color: #007bff;
+        font-size: 20px;
+      }
+    }
+  }
+}
+.show-demo-section {
+  text-align: center;
+  margin-bottom: 24px;
+  .show-demo-btn {
+    border-color: #007bff;
+    color: #007bff;
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  .full-width {
+    width: 100%;
+  }
+  .form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 8px 0;
+    .forgot-password-link {
+      font-size: 14px;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  .login-btn {
+    height: 48px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    margin-top: 8px;
+    .loading-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      span {
+        font-size: 14px;
+      }
+    }
+  }
+}
+.register-section {
+  text-align: center;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
+  p {
+    margin: 0 0 8px 0;
+    color: #6c757d;
+    font-size: 14px;
+  }
+}
+@media (max-width: 480px) {
+  .login-container {
+    padding: 16px;
+  }
+  .login-card {
+    mat-card-header {
+      padding: 24px 20px;
+      margin: -20px -20px 20px -20px;
+      .login-title {
+        font-size: 24px;
+      }
+      .login-subtitle {
+        font-size: 14px;
+      }
+    }
+  }
+  .demo-section {
+    .demo-credentials {
+      .demo-credential-item {
+        .credential-info {
+          .credential-details {
+            span {
+              font-size: 11px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+::ng-deep {
+  .success-snackbar {
+    background-color: #4caf50 !important;
+    color: white !important;
+  }
+  .error-snackbar {
+    background-color: #f44336 !important;
+    color: white !important;
+  }
+}
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/guards/auth-guard/auth-guard.ts">
+import { inject } from "@angular/core";
+import { CanActivateFn, Router } from "@angular/router";
+import { IAuthService } from "../../services/auth-service/auth-service.inteface";
+import { map, take } from "rxjs";
+export const authGuard: CanActivateFn = (route, state) =>
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/guards/guest-guard/guest-guard.ts">
+import { inject } from "@angular/core";
+import { CanActivateFn, Router } from "@angular/router";
+import { IAuthService } from "../../services/auth-service/auth-service.inteface";
+import { map, take } from "rxjs";
+export const guestGuard: CanActivateFn = (route, state) =>
+</file>
+
+<file path="src/index.html">
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AngularKevenTemplate</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="mat-typography">
+  <app-root></app-root>
+</body>
+</html>
+</file>
+
+<file path="src/styles.scss">
+@import 'tailwindcss';
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+</file>
+
+<file path="package.json">
+{
+  "name": "angular-keven-template",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "lint": "echo 'Linting not configured yet - this is expected in bootstrap phase'",
+    "test": "echo 'Tests not configured yet'"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/cdk": "^20.0.3",
+    "@angular/common": "^20.0.0",
+    "@angular/compiler": "^20.0.0",
+    "@angular/core": "^20.0.0",
+    "@angular/forms": "^20.0.0",
+    "@angular/material": "^20.0.3",
+    "@angular/platform-browser": "^20.0.0",
+    "@angular/router": "^20.0.0",
+    "@tailwindcss/postcss": "^4.1.10",
+    "postcss": "^8.5.6",
+    "rxjs": "~7.8.0",
+    "tailwindcss": "^4.1.10",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^20.0.3",
+    "@angular/cli": "^20.0.3",
+    "@angular/compiler-cli": "^20.0.0",
+    "@types/jasmine": "~5.1.0",
+    "jasmine-core": "~5.7.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "typescript": "~5.8.2"
+  }
+}
+</file>
+
+<file path="src/app/app.html">
+<router-outlet></router-outlet>
+</file>
+
+<file path="src/app/app.routes.ts">
+import { Routes } from '@angular/router';
+</file>
+
+<file path="src/app/app.ts">
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+⋮----
+export class App
+</file>
+
+<file path="src/app/apps/admin-panel/core/services/navigation/navigation-service/navigation-service.interface.ts">
+import { BehaviorSubject, Observable } from 'rxjs';
+import { NavigationItem } from '../../../types/navigation/navigation-item.type';
+export interface INavigationService {
+  readonly navigationItems$: Observable<NavigationItem[]>;
+  getCurrentNavigationItems(): NavigationItem[];
+  loadNavigationItems(): Observable<NavigationItem[]>;
+  setNavigationItems(items: NavigationItem[]): void;
+}
+⋮----
+getCurrentNavigationItems(): NavigationItem[];
+loadNavigationItems(): Observable<NavigationItem[]>;
+setNavigationItems(items: NavigationItem[]): void;
+</file>
+
+<file path="src/app/apps/admin-panel/core/types/navigation/navigation-item.type.ts">
+import { BaseItem } from "../base-item/base-item.type";
+type NavigationItemType = 'section' | 'itemWithIcon' | 'item';
+export class NavigationItem extends BaseItem
+⋮----
+constructor(params: {
+    type: NavigationItem['type'];
+    label: NavigationItem['label'];
+    icon?: NavigationItem['icon'];
+    children?: NavigationItem['children'];
+    hidden?: NavigationItem['hidden'];
+    route?: NavigationItem['route'];
+})
+public isHidden(): boolean
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/features/login/pages/login-page/login-page.ts">
+import { Component, computed, inject, signal } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCardModule } from '@angular/material/card';
+import { LoginCredentials } from '../../../../types/login-credentials/login-credentials.type';
+import { IAuthService } from '../../../../services/auth-service/auth-service.inteface';
+⋮----
+export class LoginPage
+⋮----
+constructor()
+private createLoginForm(): FormGroup
+private checkAuthMessage(): void
+protected togglePasswordVisibility(): void
+protected fillDemoCredentials(credentials:
+protected toggleDemoCredentials(): void
+protected onSubmit(): void
+protected navigateToRegister(): void
+protected navigateToForgotPassword(): void
+protected getFieldError(fieldName: string): string
+protected hasFieldError(fieldName: string): boolean
+private getFieldDisplayName(fieldName: string): string
+private markFormGroupTouched(): void
+</file>
+
+<file path="src/app/apps/admin-panel/modules/auth/services/auth-service/index.ts">
+import { Provider } from "@angular/core";
+import { IAuthService } from "./auth-service.inteface";
+import { MockAuthService } from "./mock-auth.service";
+</file>
+
+<file path="src/app/apps/admin-panel/modules/users/features/user-management/user-management.routes.ts">
+import { Routes } from "@angular/router";
+</file>
+
+<file path="tsconfig.json">
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "preserve",
+    "paths": {
+      "@core/utils/generate-uuid/generate-uuid": [
+        "./app/core/utils/generate-uuid/generate-uuid"
+      ]
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "typeCheckHostBindings": true,
+    "strictTemplates": true,
+    "fullTemplateTypeCheck": true
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
+}
+</file>
+
+<file path="src/app/apps/admin-panel/config/admin-panel.providers.ts">
+import { Provider } from "@angular/core";
+import { provideAdminPanelCoreProviders } from "../core/config/admin-panel-core-providers";
+import { provideUserModuleProviders } from "../modules/users/config/user-module.providers";
+import { provideAuthModuleProviders } from "../modules/auth/config/auth-module.providers";
+⋮----
+export const provideAdminPanelProviders = () =>
+</file>
+
+<file path="src/app/apps/admin-panel/core/components/layout/admin-layout/admin-layout.ts">
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterOutlet, Router, RouterLink } from '@angular/router';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Observable, Subject } from 'rxjs';
+import { map, shareReplay, takeUntil } from 'rxjs/operators';
+import { NavigationItem } from '../../../types/navigation/navigation-item.type';
+import { NavigationService } from '../../../services/navigation/navigation-service/navigation-service-impl.service';
+⋮----
+export class AdminLayout implements OnInit
+⋮----
+ngOnInit(): void
+ngOnDestroy(): void
+private async loadNavigationItems(): Promise<void>
+public onSidenavToggle(opened: boolean): void
+public navigateToRoute(route?: string): void
+public isActiveRoute(route?: string): boolean
+</file>
+
+<file path="src/app/apps/admin-panel/core/services/navigation/navigation-service/navigation-service-impl.service.ts">
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, shareReplay, take, takeUntil, tap } from 'rxjs';
+import { NavigationItem } from '../../../types/navigation/navigation-item.type';
+import { INavigationService } from './navigation-service.interface';
+⋮----
+export class NavigationService implements INavigationService
+⋮----
+constructor()
+public getCurrentNavigationItems(): NavigationItem[]
+public loadNavigationItems(): Observable<NavigationItem[]>
+public setNavigationItems(items: NavigationItem[]): void
+private initializeDefaultNavigationItems(): void
+private createDefaultNavigationItems(): NavigationItem[]
+private fetchNavigationItemsFromSource(): Observable<NavigationItem[]>
+</file>
+
+<file path="src/app/apps/admin-panel/config/admin-panel.routes.ts">
+import { Routes } from "@angular/router";
+import { AdminLayout } from "../core/components/layout/admin-layout/admin-layout";
+import { authGuard } from "../modules/auth/guards/auth-guard/auth-guard";
+import { authChildGuard } from "../modules/auth/guards/auth-child-guard/auth-child-guard";
+import { guestGuard } from "../modules/auth/guards/guest-guard/guest-guard";
+⋮----
+export async function generateAdminPanelRoutes(config?: any)
+</file>
+
+</files>
