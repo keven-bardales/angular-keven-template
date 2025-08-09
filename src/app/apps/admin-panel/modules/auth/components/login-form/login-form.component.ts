@@ -49,13 +49,6 @@ export class LoginFormComponent implements OnInit {
   // Form
   loginForm!: FormGroup;
 
-  // Demo credentials
-  protected readonly showDemoCredentials = signal(true);
-  protected readonly demoCredentials = [
-    { email: 'admin@example.com', password: 'admin123', role: 'Administrator' },
-    { email: 'user@example.com', password: 'user123', role: 'Regular User' },
-  ];
-
   ngOnInit(): void {
     this.initializeForm();
   }
@@ -117,18 +110,6 @@ export class LoginFormComponent implements OnInit {
 
   togglePasswordVisibility(): void {
     this.passwordVisible.update(visible => !visible);
-  }
-
-  toggleDemoCredentials(): void {
-    this.showDemoCredentials.update(show => !show);
-  }
-
-  fillDemoCredentials(credentials: { email: string; password: string }): void {
-    this.loginForm.patchValue({
-      email: credentials.email,
-      password: credentials.password,
-    });
-    this.showDemoCredentials.set(false);
   }
 
   navigateToRegister(): void {

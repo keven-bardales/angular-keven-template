@@ -3,46 +3,6 @@
   <div class="w-full max-w-md">
     <nz-card nzTitle="Sign In">
       <form nz-form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <!-- Demo Credentials Section -->
-        @if(showDemoCredentials()) {
-        <nz-card nzSize="small" nzTitle="Demo Credentials" class="mb-4">
-          <ng-template #extra>
-            <button nz-button nzType="text" nzSize="small" (click)="toggleDemoCredentials()">
-              <span nz-icon nzType="close"></span>
-            </button>
-          </ng-template>
-
-          <div class="space-y-2">
-            <nz-card
-              *ngFor="let cred of demoCredentials"
-              nzSize="small"
-              nzHoverable
-              class="cursor-pointer"
-              (click)="fillDemoCredentials(cred)"
-            >
-              <div class="flex justify-between items-center">
-                <div>
-                  <div class="font-medium">{{ cred.role }}</div>
-                  <div class="text-xs">
-                    <div>{{ cred.email }}</div>
-                    <div>{{ cred.password }}</div>
-                  </div>
-                </div>
-                <span nz-icon nzType="arrow-right"></span>
-              </div>
-            </nz-card>
-          </div>
-        </nz-card>
-        }
-
-        <!-- Show Demo Button when hidden -->
-        @if(!showDemoCredentials()) {
-        <button nz-button nzType="dashed" nzSize="small" (click)="toggleDemoCredentials()">
-          <span nz-icon nzType="info-circle"></span>
-          Show Demo Credentials
-        </button>
-        }
-
         <!-- Email Field -->
         <nz-form-item>
           <nz-form-label [nzRequired]="true">Email</nz-form-label>
