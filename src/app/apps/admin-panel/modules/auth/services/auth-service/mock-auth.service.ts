@@ -34,11 +34,7 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
         { id: '1', name: 'admin', description: 'System Administrator' },
         { id: '2', name: 'user', description: 'Regular User' }
       ],
-      permissions: [
-        { id: '1', name: 'read', resource: '*', action: 'read' },
-        { id: '2', name: 'write', resource: '*', action: 'write' },
-        { id: '3', name: 'delete', resource: '*', action: 'delete' }
-      ],
+      permissions: ['ADMIN_ACCESS', 'USERS_READ_ALL', 'USERS_WRITE_ALL', 'USERS_DELETE_ALL'],
       avatar: 'https://via.placeholder.com/150',
       isActive: true
     },
@@ -51,10 +47,7 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
       roles: [
         { id: '2', name: 'user', description: 'Regular User' }
       ],
-      permissions: [
-        { id: '1', name: 'read', resource: 'users', action: 'read' },
-        { id: '4', name: 'update_profile', resource: 'profile', action: 'update' }
-      ],
+      permissions: ['USERS_READ_OWN', 'PROFILE_UPDATE'],
       avatar: 'https://via.placeholder.com/150',
       isActive: true
     }
@@ -90,8 +83,9 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
         const userData = JSON.parse(storedUser);
         const tokens = JSON.parse(storedTokens);
 
-        // Check if tokens are still valid
-        if (new Date(tokens.expiresAt) > new Date()) {
+        // Check if tokens are still valid (assuming tokens were stored with an expiresAt calculated from expiresIn)
+        const expirationTime = tokens.expiresAt || Date.now() + (tokens.expiresIn * 1000);
+        if (new Date(expirationTime) > new Date()) {
           const user = new LoggedInUser(userData);
           this.updateAuthState({
             isAuthenticated: true,
@@ -123,13 +117,12 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
   }
 
   private generateMockTokens(): AuthTokens {
-    const now = new Date();
-    const expiresAt = new Date(now.getTime() + 24 * 60 * 60 * 1000); // 24 hours
+    const expiresIn = 24 * 60 * 60; // 24 hours in seconds
 
     return {
       accessToken: `mock_access_token_${Date.now()}`,
       refreshToken: `mock_refresh_token_${Date.now()}`,
-      expiresAt,
+      expiresIn,
       tokenType: 'Bearer'
     };
   }
@@ -159,9 +152,14 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
         const tokens = this.generateMockTokens();
 
         const response: AuthResponse<LoggedInUser> = {
-          user,
-          tokens,
-          message: 'Login successful'
+          success: true,
+          data: {
+            user,
+            tokens,
+            permissions: mockUserData.permissions || []
+          },
+          errors: [],
+          timestamp: new Date().toISOString()
         };
 
         this.saveAuthData(response);
@@ -234,9 +232,14 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
 
         const tokens = this.generateMockTokens();
         const response: AuthResponse<LoggedInUser> = {
-          user: newUser,
-          tokens,
-          message: 'Registration successful'
+          success: true,
+          data: {
+            user: newUser,
+            tokens,
+            permissions: ['USERS_READ_OWN', 'PROFILE_UPDATE']
+          },
+          errors: [],
+          timestamp: new Date().toISOString()
         };
 
         this.saveAuthData(response);
@@ -323,10 +326,11 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
   }
 
   validateToken(token?: string): Observable<boolean> {
-    const tokens = token ? { accessToken: token } as AuthTokens : this.getStoredTokens();
+    const tokens = token ? { accessToken: token, expiresIn: 3600 } as AuthTokens : this.getStoredTokens();
     if (!tokens) return of(false);
 
-    return of(new Date(tokens.expiresAt) > new Date()).pipe(delay(200));
+    const expirationTime = (tokens as any).expiresAt || Date.now() + (tokens.expiresIn * 1000);
+    return of(new Date(expirationTime) > new Date()).pipe(delay(200));
   }
 
   revokeToken(token?: string): Observable<void> {
@@ -412,7 +416,10 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
 
   getSessionExpiryTime(): Date | null {
     const tokens = this.getStoredTokens();
-    return tokens ? new Date(tokens.expiresAt) : null;
+    if (!tokens) return null;
+    
+    const expirationTime = (tokens as any).expiresAt || Date.now() + (tokens.expiresIn * 1000);
+    return new Date(expirationTime);
   }
 
   hasRole(roleName: string): boolean {
@@ -442,11 +449,14 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
   }
 
   saveAuthData(response: AuthResponse<LoggedInUser>): void {
-    if (response.user) {
-      localStorage.setItem(this.STORAGE_KEYS.USER, JSON.stringify(response.user));
+    if (response.data?.user) {
+      localStorage.setItem(this.STORAGE_KEYS.USER, JSON.stringify(response.data.user));
     }
-    if (response.tokens) {
-      localStorage.setItem(this.STORAGE_KEYS.TOKENS, JSON.stringify(response.tokens));
+    if (response.data?.tokens) {
+      localStorage.setItem(this.STORAGE_KEYS.TOKENS, JSON.stringify(response.data.tokens));
+    }
+    if (response.data?.permissions) {
+      localStorage.setItem('auth_permissions', JSON.stringify(response.data.permissions));
     }
   }
 

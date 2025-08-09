@@ -16,9 +16,7 @@
     "target": "ES2022",
     "module": "preserve",
     "paths": {
-      "@core/utils/generate-uuid/generate-uuid": [
-        "./app/core/utils/generate-uuid/generate-uuid"
-      ]
+      "@core/utils/generate-uuid/generate-uuid": ["./app/core/utils/generate-uuid/generate-uuid"]
     }
   },
   "angularCompilerOptions": {
