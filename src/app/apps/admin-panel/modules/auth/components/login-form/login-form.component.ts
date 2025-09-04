@@ -9,10 +9,10 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
-import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
 import { IAuthService } from '../../services/auth-service/auth-service.inteface';
 import { LoginCredentials } from '../../types/login-credentials/login-credentials.type';
 
@@ -27,7 +27,6 @@ import { LoginCredentials } from '../../types/login-credentials/login-credential
     NzButtonModule,
     NzCheckboxModule,
     NzAlertModule,
-    NzCardModule,
     NzIconModule,
     NzDividerModule,
   ],
@@ -79,8 +78,6 @@ export class LoginFormComponent implements OnInit {
       rememberMe: this.loginForm.get('rememberMe')?.value,
     };
 
-    console.log('Login credentials:', credentials);
-
     this.authService.login(credentials).subscribe({
       next: response => {
         this.isLoading.set(false);
@@ -94,11 +91,9 @@ export class LoginFormComponent implements OnInit {
         }
       },
       error: error => {
-        console.log('Login error:', error);
         this.isLoading.set(false);
         const errorMessage = error?.error?.errors?.[0]?.message || 'An unexpected error occurred';
         this.authError.set(errorMessage);
-        this.message.error('Login failed. Please try again.');
       },
     });
   }

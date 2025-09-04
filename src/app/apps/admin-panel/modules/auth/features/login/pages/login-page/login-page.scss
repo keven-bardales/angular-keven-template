@@ -1,0 +1,48 @@
+// Login page responsive layout
+
+.min-h-screen {
+  // Ensure proper mobile height handling
+  min-height: 100vh;
+  min-height: 100dvh; // Dynamic viewport height for mobile browsers
+}
+
+// Mobile optimizations
+@media (max-width: 640px) {
+  .min-h-screen {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+  
+  .max-w-md {
+    max-width: 100%;
+  }
+  
+  .space-y-8 > * + * {
+    margin-top: 24px; // Reduced spacing on mobile
+  }
+  
+  .bg-white.rounded-lg.shadow-lg {
+    padding: 24px; // Reduced padding on mobile
+  }
+  
+  .text-3xl {
+    font-size: 1.75rem; // Smaller title on mobile
+  }
+  
+  .text-5xl {
+    font-size: 2.5rem; // Smaller icon on mobile
+  }
+}
+
+// Improve focus visibility
+:focus-visible {
+  outline: 2px solid #1890ff;
+  outline-offset: 2px;
+}
+
+// Loading states
+.ant-spin-spinning {
+  pointer-events: none;
+}

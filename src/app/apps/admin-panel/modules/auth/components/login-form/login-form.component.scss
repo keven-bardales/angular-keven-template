@@ -1,0 +1,135 @@
+// Clean form styling that works with ng-zorro defaults
+
+// Form spacing and layout
+form {
+  .ant-form-item {
+    margin-bottom: 24px;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  // Form labels
+  .ant-form-item-label > label {
+    font-weight: 500;
+    color: #262626;
+  }
+  
+  // Input groups
+  .ant-input-group-wrapper {
+    .ant-input-group {
+      .ant-input {
+        height: 48px;
+        font-size: 16px;
+        
+        &::placeholder {
+          color: #bfbfbf;
+        }
+      }
+      
+      .ant-input-prefix {
+        color: #8c8c8c;
+      }
+    }
+  }
+  
+  // Button improvements
+  .ant-btn-primary {
+    height: 48px;
+    font-size: 16px;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(24, 144, 255, 0.24);
+    
+    &:hover {
+      box-shadow: 0 4px 8px rgba(24, 144, 255, 0.32);
+      transform: translateY(-1px);
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
+  }
+  
+  // Link buttons
+  .ant-btn-link {
+    padding: 0;
+    height: auto;
+    line-height: 1.5;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  
+  // Checkbox
+  .ant-checkbox-wrapper {
+    font-size: 14px;
+  }
+  
+  // Alert styling
+  .ant-alert {
+    border-radius: 6px;
+    margin-bottom: 0;
+  }
+  
+  // Divider
+  .ant-divider {
+    margin: 24px 0;
+    color: #8c8c8c;
+    font-size: 14px;
+  }
+}
+
+// Mobile responsiveness
+@media (max-width: 640px) {
+  form {
+    .ant-form-item {
+      margin-bottom: 20px;
+    }
+    
+    .ant-input-group-wrapper .ant-input-group .ant-input {
+      height: 44px;
+      font-size: 16px; // Prevent zoom on iOS
+    }
+    
+    .ant-btn-primary {
+      height: 44px;
+    }
+  }
+}
+
+// Focus states
+.ant-input-group-wrapper:focus-within {
+  .ant-input-group {
+    border-color: #1890ff;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+    border-radius: 6px;
+  }
+}
+
+// Error states
+.ant-form-item-has-error {
+  .ant-input-group {
+    .ant-input {
+      border-color: #ff4d4f;
+    }
+    
+    .ant-input-prefix {
+      color: #ff4d4f;
+    }
+  }
+}
+
+// Success states  
+.ant-form-item-has-success {
+  .ant-input-group {
+    .ant-input {
+      border-color: #52c41a;
+    }
+    
+    .ant-input-prefix {
+      color: #52c41a;
+    }
+  }
+}

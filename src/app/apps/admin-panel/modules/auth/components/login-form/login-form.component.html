@@ -1,105 +1,115 @@
-<!-- Clean Login Form Component with ng-zorro default styles and minimal Tailwind -->
-<div class="min-h-screen flex items-center justify-center p-4 w-full">
-  <div class="w-full !max-w-[400px]">
-    <nz-card nzTitle="Sign In">
-      <form nz-form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <!-- Email Field -->
-        <nz-form-item>
-          <nz-form-label [nzRequired]="true">Email</nz-form-label>
-          <nz-form-control [nzErrorTip]="emailErrorTemplate">
-            <nz-input-group nzPrefixIcon="mail">
-              <input nz-input formControlName="email" placeholder="Enter your email" type="email" />
-            </nz-input-group>
-            <ng-template #emailErrorTemplate let-control>
-              <ng-container *ngIf="control.hasError('required')"> Email is required </ng-container>
-              <ng-container *ngIf="control.hasError('email')">
-                Please enter a valid email address
-              </ng-container>
-            </ng-template>
-          </nz-form-control>
-        </nz-form-item>
+<form nz-form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <!-- Email Field -->
+  <nz-form-item>
+    <nz-form-label nzFor="email" nzRequired>Email</nz-form-label>
+    <nz-form-control nzErrorTip="Please input your email address!">
+      <nz-input-group nzPrefixIcon="mail" nzSize="large">
+        <input
+          id="email"
+          type="email"
+          nz-input
+          formControlName="email"
+          placeholder="Enter your email address"
+          autocomplete="email"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
 
-        <!-- Password Field -->
-        <nz-form-item>
-          <nz-form-label [nzRequired]="true">Password</nz-form-label>
-          <nz-form-control [nzErrorTip]="passwordErrorTemplate">
-            <nz-input-group nzPrefixIcon="lock" [nzSuffix]="suffixTemplate">
-              <input
-                [type]="passwordVisible() ? 'text' : 'password'"
-                nz-input
-                formControlName="password"
-                placeholder="Enter your password"
-              />
-            </nz-input-group>
-            <ng-template #suffixTemplate>
-              <span
-                nz-icon
-                [nzType]="passwordVisible() ? 'eye-invisible' : 'eye'"
-                (click)="togglePasswordVisibility()"
-                class="cursor-pointer"
-              >
-              </span>
-            </ng-template>
-            <ng-template #passwordErrorTemplate let-control>
-              <ng-container *ngIf="control.hasError('required')">
-                Password is required
-              </ng-container>
-              <ng-container *ngIf="control.hasError('minlength')">
-                Password must be at least 6 characters
-              </ng-container>
-            </ng-template>
-          </nz-form-control>
-        </nz-form-item>
+  <!-- Password Field -->
+  <nz-form-item>
+    <nz-form-label nzFor="password" nzRequired>Password</nz-form-label>
+    <nz-form-control nzErrorTip="Please input your password!">
+      <nz-input-group nzPrefixIcon="lock" [nzSuffix]="suffixTemplate" nzSize="large">
+        <input
+          id="password"
+          [type]="passwordVisible() ? 'text' : 'password'"
+          nz-input
+          formControlName="password"
+          placeholder="Enter your password"
+          autocomplete="current-password"
+        />
+      </nz-input-group>
+      <ng-template #suffixTemplate>
+        <span
+          nz-icon
+          [nzType]="passwordVisible() ? 'eye-invisible' : 'eye'"
+          (click)="togglePasswordVisibility()"
+          class="cursor-pointer"
+        ></span>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
 
-        <!-- Remember Me -->
-        <nz-form-item>
-          <nz-form-control>
-            <label nz-checkbox formControlName="rememberMe"> Remember me </label>
-          </nz-form-control>
-        </nz-form-item>
+  <!-- Remember Me and Forgot Password Row -->
+  <nz-form-item>
+    <div class="flex items-center justify-between">
+      <nz-form-control>
+        <label nz-checkbox formControlName="rememberMe">
+          Remember me
+        </label>
+      </nz-form-control>
+      
+      <button
+        type="button"
+        nz-button
+        nzType="link"
+        nzSize="small"
+        (click)="navigateToForgotPassword()"
+        class="p-0"
+      >
+        Forgot password?
+      </button>
+    </div>
+  </nz-form-item>
 
-        <!-- Error Display -->
-        <nz-alert
-          *ngIf="authError()"
-          [nzMessage]="authError()!"
-          nzType="error"
-          nzShowIcon
-          class="mb-4"
+  <!-- Error Display -->
+  <nz-form-item *ngIf="authError()">
+    <nz-form-control>
+      <nz-alert
+        [nzMessage]="authError()!"
+        nzType="error"
+        nzShowIcon
+        nzCloseable
+      ></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Submit Button -->
+  <nz-form-item>
+    <nz-form-control>
+      <button
+        nz-button
+        nzType="primary"
+        nzSize="large"
+        nzBlock
+        [nzLoading]="isLoading()"
+        type="submit"
+        [disabled]="!loginForm.valid"
+      >
+        <span *ngIf="!isLoading()">Sign In</span>
+        <span *ngIf="isLoading()">Signing In...</span>
+      </button>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Divider -->
+  <nz-divider nzText="or" nzPlain></nz-divider>
+
+  <!-- Register Link -->
+  <nz-form-item>
+    <nz-form-control>
+      <div class="text-center">
+        <span class="text-gray-600">Don't have an account? </span>
+        <button
+          type="button"
+          nz-button
+          nzType="link"
+          (click)="navigateToRegister()"
         >
-        </nz-alert>
-
-        <!-- Submit Button -->
-        <nz-form-item>
-          <nz-form-control>
-            <button
-              nz-button
-              nzType="primary"
-              nzBlock
-              [nzLoading]="isLoading()"
-              [disabled]="loginForm.invalid"
-              type="submit"
-            >
-              <span *ngIf="!isLoading()">Sign In</span>
-              <span *ngIf="isLoading()">Signing In...</span>
-            </button>
-          </nz-form-control>
-        </nz-form-item>
-
-        <!-- Additional Actions -->
-        <nz-divider nzText="or"></nz-divider>
-
-        <div class="text-center space-y-2">
-          <div>
-            <button nz-button nzType="link" (click)="navigateToForgotPassword()">
-              Forgot your password?
-            </button>
-          </div>
-          <div>
-            <span>Don't have an account? </span>
-            <button nz-button nzType="link" (click)="navigateToRegister()">Sign up now</button>
-          </div>
-        </div>
-      </form>
-    </nz-card>
-  </div>
-</div>
+          Sign up now
+        </button>
+      </div>
+    </nz-form-control>
+  </nz-form-item>
+</form>
