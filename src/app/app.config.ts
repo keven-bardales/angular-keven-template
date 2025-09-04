@@ -8,9 +8,13 @@ import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors, withFetch } from '@angular/common/http';
 import { icons } from './icons-provider';
 import { provideNzIcons } from 'ng-zorro-antd/icon';
+
+// Import interceptors
+import { authTokenInterceptor } from './core/interceptors/auth-token.interceptor';
+import { errorHandlingInterceptor } from './core/interceptors/error-handling.interceptor';
 
 registerLocaleData(es);
 
@@ -19,6 +23,17 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
-    provideAdminPanelProviders(), provideNzI18n(es_ES), importProvidersFrom(FormsModule), provideAnimationsAsync(), provideHttpClient(), provideNzIcons(icons)
+    provideAdminPanelProviders(),
+    provideNzI18n(es_ES),
+    importProvidersFrom(FormsModule),
+    provideAnimationsAsync(),
+    provideHttpClient(
+      withInterceptors([
+        authTokenInterceptor,
+        errorHandlingInterceptor
+      ]),
+      withFetch() // Use modern fetch API instead of XMLHttpRequest
+    ),
+    provideNzIcons(icons)
   ]
 };

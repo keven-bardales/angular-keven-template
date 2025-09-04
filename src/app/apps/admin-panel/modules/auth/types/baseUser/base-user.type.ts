@@ -1,6 +1,6 @@
-import { BaseItem } from "app/apps/admin-panel/core/types/base-item/base-item.type";
-import { UserRole } from "../userRole/userRole.type";
-import { UserPermission } from "../userPermission/userPermission.type";
+import { BaseItem } from 'app/apps/admin-panel/core/types/base-item/base-item.type';
+import { UserRole } from '../userRole/userRole.type';
+import { UserPermission } from '../userPermission/userPermission.type';
 
 export abstract class BaseUser extends BaseItem {
   public email: string;

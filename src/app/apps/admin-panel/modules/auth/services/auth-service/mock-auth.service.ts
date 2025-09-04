@@ -13,13 +13,12 @@ import { ResetPasswordRequest } from '../../types/reset-password-request/reset-p
 import { ResetPasswordConfirm } from '../../types/reset-password-confirm/reset-password-confirm.type';
 import { ChangePasswordRequest } from '../../types/change-password-request/change-password-request.type';
 
-
 @Injectable()
 export class MockAuthService extends IAuthService<LoggedInUser> {
   private readonly STORAGE_KEYS = {
     USER: 'auth_user',
     TOKENS: 'auth_tokens',
-    REMEMBER_ME: 'auth_remember_me'
+    REMEMBER_ME: 'auth_remember_me',
   } as const;
 
   // Mock users database
@@ -32,11 +31,11 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
       phoneNumber: '+1234567890',
       roles: [
         { id: '1', name: 'admin', description: 'System Administrator' },
-        { id: '2', name: 'user', description: 'Regular User' }
+        { id: '2', name: 'user', description: 'Regular User' },
       ],
       permissions: ['ADMIN_ACCESS', 'USERS_READ_ALL', 'USERS_WRITE_ALL', 'USERS_DELETE_ALL'],
       avatar: 'https://via.placeholder.com/150',
-      isActive: true
+      isActive: true,
     },
     'user@example.com': {
       uuid: '2',
@@ -44,13 +43,11 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
       password: 'user123',
       fullName: 'Regular User',
       phoneNumber: '+0987654321',
-      roles: [
-        { id: '2', name: 'user', description: 'Regular User' }
-      ],
+      roles: [{ id: '2', name: 'user', description: 'Regular User' }],
       permissions: ['USERS_READ_OWN', 'PROFILE_UPDATE'],
       avatar: 'https://via.placeholder.com/150',
-      isActive: true
-    }
+      isActive: true,
+    },
   };
 
   // Auth state management
@@ -59,7 +56,7 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
     user: null,
     tokens: null,
     isLoading: false,
-    error: null
+    error: null,
   });
 
   // Public signals
@@ -84,7 +81,7 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
         const tokens = JSON.parse(storedTokens);
 
         // Check if tokens are still valid (assuming tokens were stored with an expiresAt calculated from expiresIn)
-        const expirationTime = tokens.expiresAt || Date.now() + (tokens.expiresIn * 1000);
+        const expirationTime = tokens.expiresAt || Date.now() + tokens.expiresIn * 1000;
         if (new Date(expirationTime) > new Date()) {
           const user = new LoggedInUser(userData);
           this.updateAuthState({
@@ -92,7 +89,7 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
             user,
             tokens,
             isLoading: false,
-            error: null
+            error: null,
           });
         } else {
           this.clearAuthData();
@@ -123,7 +120,7 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
       accessToken: `mock_access_token_${Date.now()}`,
       refreshToken: `mock_refresh_token_${Date.now()}`,
       expiresIn,
-      tokenType: 'Bearer'
+      tokenType: 'Bearer',
     };
   }
 
@@ -146,7 +143,7 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
 
         const user = new LoggedInUser({
           ...mockUserData,
-          lastLoginAt: new Date()
+          lastLoginAt: new Date(),
         });
 
         const tokens = this.generateMockTokens();
@@ -156,10 +153,10 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
           data: {
             user,
             tokens,
-            permissions: mockUserData.permissions || []
+            permissions: mockUserData.permissions || [],
           },
           errors: [],
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         };
 
         this.saveAuthData(response);
@@ -168,16 +165,16 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
           user,
           tokens,
           isLoading: false,
-          error: null
+          error: null,
         });
 
         return response;
       }),
-      tap(undefined, (error) => {
+      tap(undefined, error => {
         this.setLoading(false);
         this.setError({
           code: 'LOGIN_FAILED',
-          message: error.message || 'Login failed'
+          message: error.message || 'Login failed',
         });
         throw error;
       })
@@ -196,7 +193,7 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
           user: null,
           tokens: null,
           isLoading: false,
-          error: null
+          error: null,
         });
       })
     );
@@ -215,19 +212,17 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
 
         const newUser = new LoggedInUser({
           email: userData.email,
-          fullName: userData.fullName,
-          phoneNumber: userData.phoneNumber,
           roles: [{ id: '2', name: 'user', description: 'Regular User' }],
           permissions: [
             { id: '1', name: 'read', resource: 'users', action: 'read' },
-            { id: '4', name: 'update_profile', resource: 'profile', action: 'update' }
-          ]
-        });
+            { id: '4', name: 'update_profile', resource: 'profile', action: 'update' },
+          ],
+        } as any);
 
         // Add to mock database
         this.mockUsers[userData.email] = {
           ...newUser,
-          password: userData.password
+          password: userData.password,
         };
 
         const tokens = this.generateMockTokens();
@@ -236,10 +231,10 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
           data: {
             user: newUser,
             tokens,
-            permissions: ['USERS_READ_OWN', 'PROFILE_UPDATE']
+            permissions: ['USERS_READ_OWN', 'PROFILE_UPDATE'],
           },
           errors: [],
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         };
 
         this.saveAuthData(response);
@@ -248,16 +243,16 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
           user: newUser,
           tokens,
           isLoading: false,
-          error: null
+          error: null,
         });
 
         return response;
       }),
-      tap(undefined, (error) => {
+      tap(undefined, error => {
         this.setLoading(false);
         this.setError({
           code: 'REGISTRATION_FAILED',
-          message: error.message || 'Registration failed'
+          message: error.message || 'Registration failed',
         });
         throw error;
       })
@@ -326,10 +321,12 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
   }
 
   validateToken(token?: string): Observable<boolean> {
-    const tokens = token ? { accessToken: token, expiresIn: 3600 } as AuthTokens : this.getStoredTokens();
+    const tokens = token
+      ? ({ accessToken: token, expiresIn: 3600 } as AuthTokens)
+      : this.getStoredTokens();
     if (!tokens) return of(false);
 
-    const expirationTime = (tokens as any).expiresAt || Date.now() + (tokens.expiresIn * 1000);
+    const expirationTime = (tokens as any).expiresAt || Date.now() + tokens.expiresIn * 1000;
     return of(new Date(expirationTime) > new Date()).pipe(delay(200));
   }
 
@@ -358,9 +355,9 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
         // In real implementation, fetch fresh user data from API
         const updatedUser = new LoggedInUser({
           ...currentUser,
-          lastLoginAt: new Date(),
-          updatedAt: new Date()
-        });
+          lastLoginAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        } as any);
 
         this.updateAuthState({ user: updatedUser });
         localStorage.setItem(this.STORAGE_KEYS.USER, JSON.stringify(updatedUser));
@@ -381,8 +378,8 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
         const updatedUser = new LoggedInUser({
           ...currentUser,
           ...updates,
-          updatedAt: new Date()
-        });
+          updatedAt: new Date().toISOString(),
+        } as any);
 
         this.updateAuthState({ user: updatedUser });
         localStorage.setItem(this.STORAGE_KEYS.USER, JSON.stringify(updatedUser));
@@ -417,8 +414,8 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
   getSessionExpiryTime(): Date | null {
     const tokens = this.getStoredTokens();
     if (!tokens) return null;
-    
-    const expirationTime = (tokens as any).expiresAt || Date.now() + (tokens.expiresIn * 1000);
+
+    const expirationTime = (tokens as any).expiresAt || Date.now() + tokens.expiresIn * 1000;
     return new Date(expirationTime);
   }
 
@@ -429,7 +426,7 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
 
   hasPermission(permission: string, resource?: string): boolean {
     const user = this.currentUser();
-    return user ? user.hasPermission(permission, resource) : false;
+    return user ? user.hasPermission(permission, 'OWN') : false;
   }
 
   hasAnyRole(roleNames: string[]): boolean {
@@ -439,7 +436,7 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
 
   hasAnyPermission(permissions: string[], resource?: string): boolean {
     const user = this.currentUser();
-    return user ? user.hasAnyPermission(permissions, resource) : false;
+    return user ? user.hasAnyPermission(permissions, 'OWN') : false;
   }
 
   clearAuthData(): void {
@@ -469,16 +466,15 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
     }
   }
 
-  override disableTwoFactor(password: string): Observable<{ message: string; }> {
-    throw new Error()
+  override disableTwoFactor(password: string): Observable<{ message: string }> {
+    throw new Error();
   }
 
-  override enableTwoFactor(): Observable<{ qrCode: string; backupCodes: string[]; }> {
-    throw new Error()
+  override enableTwoFactor(): Observable<{ qrCode: string; backupCodes: string[] }> {
+    throw new Error();
   }
-
 
   override verifyTwoFactor(code: string, token: string): Observable<AuthResponse<LoggedInUser>> {
-    throw new Error()
+    throw new Error();
   }
 }

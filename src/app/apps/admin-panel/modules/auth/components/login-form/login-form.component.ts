@@ -79,6 +79,8 @@ export class LoginFormComponent implements OnInit {
       rememberMe: this.loginForm.get('rememberMe')?.value,
     };
 
+    console.log('Login credentials:', credentials);
+
     this.authService.login(credentials).subscribe({
       next: response => {
         this.isLoading.set(false);
@@ -92,6 +94,7 @@ export class LoginFormComponent implements OnInit {
         }
       },
       error: error => {
+        console.log('Login error:', error);
         this.isLoading.set(false);
         const errorMessage = error?.error?.errors?.[0]?.message || 'An unexpected error occurred';
         this.authError.set(errorMessage);

@@ -1,74 +1,153 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { LoginCredentials } from '../../types/login-credentials/login-credentials.type';
 import { AuthResponse } from '../../types/auth-response/auth-response.type';
 import { LoggedInUser } from '../../types/logged-in-user/logged-in-user.type';
 import { AuthTokens } from '../../types/authTokens/authToken.type';
 import { RegisterUserRequest } from '../../types/register-user-request/register-user-request.type';
-import { ResetPasswordRequest } from '../../types/reset-password-request/reset-password-request.type';
-import { ResetPasswordConfirm } from '../../types/reset-password-confirm/reset-password-confirm.type';
-import { ChangePasswordRequest } from '../../types/change-password-request/change-password-request.type';
+import { environment } from 'environments/environment';
+import {
+  ApiResponse,
+  AuthApiResponse,
+  BackendTokens,
+  BackendUser,
+  SuccessResponse,
+} from 'app/shared/types';
+
+// Import backend API types
+
+// Import environment
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthApiService {
   private readonly http = inject(HttpClient);
-  private readonly API_BASE = '/api/v1/auth';
+  private readonly API_BASE = `${environment.apiUrl}/auth`;
 
-  // Authentication endpoints
+  /**
+   * Authenticate user with email and password
+   */
   login(credentials: LoginCredentials): Observable<AuthResponse<LoggedInUser>> {
-    return this.http.post<AuthResponse<LoggedInUser>>(`${this.API_BASE}/login`, credentials);
+    return this.http
+      .post<ApiResponse<AuthApiResponse>>(`${this.API_BASE}/login`, credentials)
+      .pipe(map(response => this.transformToFrontendAuthResponse(response)));
   }
 
+  /**
+   * Logout current user and invalidate tokens
+   */
   logout(): Observable<{ success: boolean; message: string }> {
-    return this.http.post<{ success: boolean; message: string }>(`${this.API_BASE}/logout`, {});
+    return this.http.post<ApiResponse<SuccessResponse>>(`${this.API_BASE}/logout`, {}).pipe(
+      map(response => ({
+        success: response.success,
+        message: response.data?.message || 'Logged out successfully',
+      }))
+    );
   }
 
+  /**
+   * Register new user account (if registration is enabled)
+   */
   register(userData: RegisterUserRequest): Observable<AuthResponse<LoggedInUser>> {
-    return this.http.post<AuthResponse<LoggedInUser>>(`${this.API_BASE}/register`, userData);
+    return this.http
+      .post<ApiResponse<AuthApiResponse>>(`${this.API_BASE}/register`, userData)
+      .pipe(map(response => this.transformToFrontendAuthResponse(response)));
   }
 
-  // Password management
-  requestPasswordReset(request: ResetPasswordRequest): Observable<{ success: boolean; message: string }> {
-    return this.http.post<{ success: boolean; message: string }>(`${this.API_BASE}/forgot-password`, request);
-  }
-
-  confirmPasswordReset(request: ResetPasswordConfirm): Observable<{ success: boolean; message: string }> {
-    return this.http.post<{ success: boolean; message: string }>(`${this.API_BASE}/reset-password`, request);
-  }
-
-  changePassword(request: ChangePasswordRequest): Observable<{ success: boolean; message: string }> {
-    return this.http.post<{ success: boolean; message: string }>(`${this.API_BASE}/change-password`, request);
-  }
-
-  // Token management
+  /**
+   * Token management - refresh access token using refresh token
+   */
   refreshToken(refreshToken: string): Observable<{ success: boolean; data: AuthTokens }> {
-    return this.http.post<{ success: boolean; data: AuthTokens }>(`${this.API_BASE}/refresh`, { 
-      refreshToken 
-    });
+    return this.http
+      .post<ApiResponse<BackendTokens>>(`${this.API_BASE}/refresh`, {
+        refreshToken,
+      })
+      .pipe(
+        map(response => ({
+          success: response.success,
+          data: this.transformToFrontendTokens(response.data!),
+        }))
+      );
   }
 
-  validateToken(token: string): Observable<{ success: boolean; valid: boolean }> {
-    return this.http.post<{ success: boolean; valid: boolean }>(`${this.API_BASE}/validate`, { 
-      token 
-    });
-  }
-
-  revokeToken(token: string): Observable<{ success: boolean; message: string }> {
-    return this.http.post<{ success: boolean; message: string }>(`${this.API_BASE}/revoke`, { 
-      token 
-    });
-  }
-
-  // User profile
+  /**
+   * Get current authenticated user profile
+   */
   getCurrentUser(): Observable<{ success: boolean; data: LoggedInUser }> {
-    return this.http.get<{ success: boolean; data: LoggedInUser }>(`${this.API_BASE}/me`);
+    return this.http.get<ApiResponse<BackendUser>>(`${this.API_BASE}/me`).pipe(
+      map(response => ({
+        success: response.success,
+        data: this.transformToFrontendUser(response.data!),
+      }))
+    );
   }
 
-  updateUserProfile(updates: Partial<LoggedInUser>): Observable<{ success: boolean; data: LoggedInUser }> {
-    return this.http.put<{ success: boolean; data: LoggedInUser }>(`${this.API_BASE}/profile`, updates);
+  /**
+   * Helper method to transform backend auth response to frontend format
+   */
+  private transformToFrontendAuthResponse(
+    response: ApiResponse<AuthApiResponse>
+  ): AuthResponse<LoggedInUser> {
+    if (!response.success || !response.data) {
+      return {
+        success: false,
+        data: null,
+        errors: response.errors || [],
+        timestamp: response.timestamp,
+      };
+    }
+
+    const user = this.transformToFrontendUser(response.data.user);
+    const tokens = this.transformToFrontendTokens({
+      accessToken: response.data.accessToken,
+      refreshToken: response.data.refreshToken,
+      expiresIn: response.data.expiresIn,
+      tokenType: response.data.tokenType,
+    });
+
+    return {
+      success: true,
+      data: {
+        user,
+        tokens,
+        permissions: response.data.permissions,
+      },
+      errors: [],
+      timestamp: response.timestamp,
+    };
+  }
+
+  /**
+   * Transform backend user to frontend user model
+   */
+  private transformToFrontendUser(backendUser: BackendUser): LoggedInUser {
+    return new LoggedInUser({
+      uuid: backendUser.id, // LoggedInUser constructor expects uuid
+      id: backendUser.id,
+      email: backendUser.email,
+      firstName: backendUser.firstName,
+      lastName: backendUser.lastName,
+      isActive: backendUser.isActive,
+      mustChangePassword: backendUser.mustChangePassword,
+      userRoles: backendUser.userRoles,
+      createdAt: backendUser.createdAt,
+      updatedAt: backendUser.updatedAt,
+    });
+  }
+
+  /**
+   * Transform backend tokens to frontend token format
+   */
+  private transformToFrontendTokens(backendTokens: BackendTokens): AuthTokens {
+    return {
+      accessToken: backendTokens.accessToken,
+      refreshToken: backendTokens.refreshToken,
+      expiresIn: backendTokens.expiresIn,
+      tokenType: backendTokens.tokenType,
+    };
   }
 }
