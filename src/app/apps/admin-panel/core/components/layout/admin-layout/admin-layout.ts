@@ -48,26 +48,35 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
           </a>
         </div>
         <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-          <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
-            <ul>
-              <li nz-menu-item nzMatchRouter>
-                <a routerLink="/welcome">Welcome</a>
-              </li>
-              <li nz-menu-item nzMatchRouter>
-                <a>Monitor</a>
-              </li>
-              <li nz-menu-item nzMatchRouter>
-                <a>Workplace</a>
-              </li>
-            </ul>
-          </li>
-          <li nz-submenu nzOpen nzTitle="Form" nzIcon="form">
-            <ul>
-              <li nz-menu-item nzMatchRouter>
-                <a>Basic Form</a>
-              </li>
-            </ul>
-          </li>
+          <ng-container *ngFor="let item of navigationItems">
+            <!-- Section Headers -->
+            <li *ngIf="item.type === 'section'" nz-menu-group [nzTitle]="item.label">
+            </li>
+
+            <!-- Items with Icons (no children) -->
+            <li *ngIf="item.type === 'itemWithIcon' && !item.children?.length"
+                nz-menu-item nzMatchRouter>
+              <a [routerLink]="item.route">
+                <nz-icon [nzType]="item.icon || 'folder'"></nz-icon>
+                <span>{{ item.label }}</span>
+              </a>
+            </li>
+
+            <!-- Items with Icons and Children -->
+            <li *ngIf="item.type === 'itemWithIcon' && item.children?.length"
+                nz-submenu nzOpen [nzTitle]="item.label" [nzIcon]="item.icon || 'folder'">
+              <ul>
+                <li *ngFor="let child of item.children" nz-menu-item nzMatchRouter>
+                  <a [routerLink]="child.route">{{ child.label }}</a>
+                </li>
+              </ul>
+            </li>
+
+            <!-- Simple Items -->
+            <li *ngIf="item.type === 'item'" nz-menu-item nzMatchRouter>
+              <a [routerLink]="item.route">{{ item.label }}</a>
+            </li>
+          </ng-container>
         </ul>
       </nz-sider>
       <nz-layout>

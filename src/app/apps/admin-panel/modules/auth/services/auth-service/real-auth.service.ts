@@ -1,5 +1,5 @@
 import { Injectable, computed, signal, inject } from '@angular/core';
-import { Observable, of, throwError, delay, tap, catchError, switchMap } from 'rxjs';
+import { Observable, of, throwError, tap, catchError, switchMap } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { LoggedInUser } from '../../types/logged-in-user/logged-in-user.type';
@@ -241,6 +241,7 @@ export class RealAuthService extends IAuthService<LoggedInUser> {
    * Validate current token
    */
   validateToken(token?: string): Observable<boolean> {
+    console.log(token);
     const tokens = this.getStoredTokens();
     if (!tokens) return of(false);
 
@@ -350,22 +351,27 @@ export class RealAuthService extends IAuthService<LoggedInUser> {
 
   // Not implemented yet - placeholder methods
   resetPassword(request: ResetPasswordRequest): Observable<{ message: string } | null> {
+    console.log(request);
     return throwError(() => new Error('Password reset not implemented yet'));
   }
 
   confirmResetPassword(request: ResetPasswordConfirm): Observable<{ message: string } | null> {
+    console.log(request);
     return throwError(() => new Error('Password reset confirmation not implemented yet'));
   }
 
   changePassword(request: ChangePasswordRequest): Observable<{ message: string } | null> {
+    console.log(request);
     return throwError(() => new Error('Password change not implemented yet'));
   }
 
   revokeToken(token?: string): Observable<void> {
+    console.log(token);
     return of(void 0);
   }
 
   updateUserProfile(updates: Partial<LoggedInUser>): Observable<LoggedInUser | null> {
+    console.log(updates);
     return throwError(() => new Error('User profile update not implemented yet'));
   }
 
@@ -382,14 +388,17 @@ export class RealAuthService extends IAuthService<LoggedInUser> {
 
   // Placeholder methods for interface compliance
   override disableTwoFactor(password: string): Observable<{ message: string }> {
+    console.log(password);
     throw new Error('Two-factor authentication not implemented yet');
   }
 
   override enableTwoFactor(): Observable<{ qrCode: string; backupCodes: string[] }> {
+    console.log('enableTwoFactor');
     throw new Error('Two-factor authentication not implemented yet');
   }
 
   override verifyTwoFactor(code: string, token: string): Observable<AuthResponse<LoggedInUser>> {
+    console.log(code, token);
     throw new Error('Two-factor authentication not implemented yet');
   }
 }

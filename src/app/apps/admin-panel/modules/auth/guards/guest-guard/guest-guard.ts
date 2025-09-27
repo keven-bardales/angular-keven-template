@@ -4,6 +4,7 @@ import { IAuthService } from "../../services/auth-service/auth-service.inteface"
 import { map, take } from "rxjs";
 
 export const guestGuard: CanActivateFn = (route, state) => {
+  console.log(route, state);
   const authService = inject(IAuthService);
   const router = inject(Router);
 

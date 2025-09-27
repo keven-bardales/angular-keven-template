@@ -34,6 +34,7 @@ export const adminPanelRoutes: Routes = [
 ];
 
 export async function generateAdminPanelRoutes(config?: any) {
+  console.log(config);
 
   let routesToReturn = [...adminPanelRoutes]
 

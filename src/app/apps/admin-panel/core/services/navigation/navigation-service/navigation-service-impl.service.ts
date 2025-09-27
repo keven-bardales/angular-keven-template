@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, shareReplay, take, takeUntil, tap } from 'rxjs';
-import { NavigationItem } from '../../../types/navigation/navigation-item.type';
+import { BehaviorSubject, Observable, shareReplay, take, tap } from 'rxjs';
 import { INavigationService } from './navigation-service.interface';
+import { NavigationItem } from '../../../types/navigation/navigation-item.type';
 
 /**
  * Navigation Service Implementation
@@ -79,32 +79,16 @@ export class NavigationService implements INavigationService {
    */
   private createDefaultNavigationItems(): NavigationItem[] {
     return [
-      // Principal Section
+      // Modules Section
       new NavigationItem({
         type: 'section',
-        label: 'Principal'
+        label: 'Modules'
       }),
       new NavigationItem({
         type: 'itemWithIcon',
-        label: 'Users',
-        icon: 'people',
-        children: [
-          new NavigationItem({
-            type: 'item',
-            label: 'User List',
-            route: '/admin-panel/users/user-management/list'
-          }),
-          new NavigationItem({
-            type: 'item',
-            label: 'Create User',
-            route: '/admin-panel/users/create-user'
-          }),
-          new NavigationItem({
-            type: 'item',
-            label: 'Roles & Permissions',
-            route: '/admin-panel/users/roles'
-          })
-        ]
+        label: 'User Management',
+        icon: 'team',
+        route: '/admin-panel/users/user-management/list'
       }),
     ];
   }

@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { NavigationItem } from '../../../types/navigation/navigation-item.type';
 
 /**

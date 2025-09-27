@@ -21,7 +21,7 @@ export class LoggedInUser extends BaseItem {
   public permissions: UserPermission[] = [];
 
   // Additional frontend-specific properties
-  public avatar?: string;
+  public avatar?: string | null;
   public preferences?: Record<string, any>;
 
   constructor(data: {
@@ -48,7 +48,7 @@ export class LoggedInUser extends BaseItem {
     this.userRoles = data.userRoles || [];
     this.createdAt = new Date(data.createdAt);
     this.updatedAt = new Date(data.updatedAt);
-    this.avatar = data.avatar;
+    this.avatar = data.avatar || null;
     this.preferences = data.preferences || {};
   }
 
@@ -72,16 +72,13 @@ export class LoggedInUser extends BaseItem {
    * Get user's initials for avatars
    */
   public get initials(): string {
-    if (this.firstName && this.lastName) {
-      return `${this.firstName[0]}${this.lastName[0]}`.toUpperCase();
+    if (!this.firstName || this.firstName.length === 0) {
+      return '';
     }
-    if (this.firstName) {
-      return this.firstName[0].toUpperCase();
+    if (!this.lastName || this.lastName.length === 0) {
+      return '';
     }
-    if (this.lastName) {
-      return this.lastName[0].toUpperCase();
-    }
-    return this.email[0].toUpperCase();
+    return `${this.firstName[0]}${this.lastName[0]}`.toUpperCase();
   }
 
   /**

@@ -1,1 +1,51 @@
-<p>user-management-page works!</p>
+<app-crud-page
+  title="User Management"
+  description="Manage system users, their roles, and permissions"
+  [showBreadcrumb]="true"
+  [showAddButton]="true"
+  addButtonText="Add New User"
+  (onAdd)="openCreateModal()"
+>
+  <app-data-table
+    [data]="users"
+    [columns]="columns"
+    [actions]="actions"
+    [loading]="loading"
+    [showSearch]="true"
+    searchPlaceholder="Search by name or email..."
+    [isServerSide]="true"
+    [pagination]="pagination"
+    idKey="id"
+    (pageChange)="onPageChange($event)"
+    (searchChange)="onSearchChange($event)"
+  ></app-data-table>
+</app-crud-page>
+
+<!-- User Form Modal -->
+<app-user-form-modal
+  [isVisible]="showUserModal"
+  [user]="selectedUser!"
+  [isLoading]="modalLoading"
+  (onSave)="onSaveUser($event)"
+></app-user-form-modal>
+
+<!-- Templates for custom column rendering -->
+<ng-template #statusTemplate let-item="item" let-column="column">
+  <nz-tag *ngIf="column.key === 'isActive' && item.isActive" nzColor="green">
+    <nz-icon nzType="check-circle"></nz-icon> Active
+  </nz-tag>
+  <nz-tag *ngIf="column.key === 'isActive' && !item.isActive" nzColor="red">
+    <nz-icon nzType="close-circle"></nz-icon> Inactive
+  </nz-tag>
+
+  <nz-tag *ngIf="column.key === 'mustChangePassword' && item.mustChangePassword" nzColor="warning">
+    <nz-icon nzType="warning"></nz-icon> Must Change
+  </nz-tag>
+  <nz-tag *ngIf="column.key === 'mustChangePassword' && !item.mustChangePassword" nzColor="default">
+    <nz-icon nzType="check"></nz-icon> OK
+  </nz-tag>
+</ng-template>
+
+<ng-template #dateTemplate let-item="item" let-column="column">
+  {{ item[column.key] | date:'MMM dd, yyyy' }}
+</ng-template>

@@ -425,6 +425,7 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
   }
 
   hasPermission(permission: string, resource?: string): boolean {
+    console.log(permission, resource);
     const user = this.currentUser();
     return user ? user.hasPermission(permission, 'OWN') : false;
   }
@@ -435,6 +436,7 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
   }
 
   hasAnyPermission(permissions: string[], resource?: string): boolean {
+    console.log(permissions, resource);
     const user = this.currentUser();
     return user ? user.hasAnyPermission(permissions, 'OWN') : false;
   }
@@ -467,14 +469,17 @@ export class MockAuthService extends IAuthService<LoggedInUser> {
   }
 
   override disableTwoFactor(password: string): Observable<{ message: string }> {
+    console.log(password);
     throw new Error();
   }
 
   override enableTwoFactor(): Observable<{ qrCode: string; backupCodes: string[] }> {
+    console.log('enableTwoFactor');
     throw new Error();
   }
 
   override verifyTwoFactor(code: string, token: string): Observable<AuthResponse<LoggedInUser>> {
+    console.log(code, token);
     throw new Error();
   }
 }

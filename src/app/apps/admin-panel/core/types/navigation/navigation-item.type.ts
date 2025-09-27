@@ -22,10 +22,10 @@ export class NavigationItem extends BaseItem {
     super();
     this.type = params.type;
     this.label = params.label;
-    this.icon = params.icon;
-    this.children = params.children;
-    this.hidden = params.hidden;
-    this.route = params.route;
+    this.icon = params.icon || '';
+    this.children = params.children || [];
+    this.hidden = params.hidden || false;
+    this.route = params.route || '';
   }
 
   public isHidden(): boolean {

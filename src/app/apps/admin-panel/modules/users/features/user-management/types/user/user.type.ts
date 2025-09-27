@@ -1,23 +1,28 @@
-import { BaseItem } from "app/apps/admin-panel/core/types/base-item/base-item.type";
-
-export class AppUser extends BaseItem {
-  fullName: string;
+export interface User {
+  id: string;
   email: string;
-  role: string;
-  phoneNumber: string;
+  firstName: string;
+  lastName: string;
+  fullName: string;
+  isActive: boolean;
+  mustChangePassword: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
 
+export interface CreateUserRequest {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  isActive?: boolean;
+  mustChangePassword?: boolean;
+}
 
-  constructor(obj: {
-    fullName: AppUser['fullName'];
-    email: AppUser['email'];
-    role: AppUser['role'];
-    phoneNumber: AppUser['phoneNumber'];
-  }) {
-    super();
-    this.fullName = obj.fullName;
-    this.email = obj.email;
-    this.role = obj.role;
-    this.phoneNumber = obj.phoneNumber;
-  }
-
+export interface UpdateUserRequest {
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  isActive?: boolean;
+  mustChangePassword?: boolean;
 }

@@ -5,11 +5,11 @@ import { UserPermission } from '../userPermission/userPermission.type';
 export abstract class BaseUser extends BaseItem {
   public email: string;
   public fullName: string;
-  public phoneNumber?: string;
+  public phoneNumber?: string | null;
   public roles: UserRole[];
   public permissions: UserPermission[];
   public isActive: boolean;
-  public lastLoginAt?: Date;
+  public lastLoginAt?: Date | null;
   public createdAt: Date;
   public updatedAt: Date;
 
@@ -17,11 +17,11 @@ export abstract class BaseUser extends BaseItem {
     super(data.uuid);
     this.email = data.email;
     this.fullName = data.fullName;
-    this.phoneNumber = data.phoneNumber;
+    this.phoneNumber = data.phoneNumber || null;
     this.roles = data.roles || [];
     this.permissions = data.permissions || [];
     this.isActive = data.isActive ?? true;
-    this.lastLoginAt = data.lastLoginAt;
+    this.lastLoginAt = data.lastLoginAt || null;
     this.createdAt = data.createdAt || new Date();
     this.updatedAt = data.updatedAt || new Date();
   }

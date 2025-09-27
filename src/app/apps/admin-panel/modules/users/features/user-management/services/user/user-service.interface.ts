@@ -1,12 +1,22 @@
 import { Observable } from "rxjs";
-import { AppUser } from "../../types/user/user.type";
+import { User, CreateUserRequest, UpdateUserRequest } from "../../types/user/user.type";
+import { PaginatedResponse } from "../../../../../../../../shared/models/api-response.model";
+
+export interface UserListParams {
+  page?: number;
+  limit?: number;
+  searchTerm?: string;
+  includeInactive?: boolean;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
+}
 
 export interface IUserService {
-
-  getAllUsers(): Observable<AppUser[]>;
-  getUserById(id: string): Observable<AppUser>;
-  createUser(user: AppUser): Observable<AppUser>;
-  updateUser(id: string, user: AppUser): Observable<AppUser>;
-  deleteUser(id: string): Observable<void>;
-
+  getUsers(params?: UserListParams): Observable<PaginatedResponse<User>>;
+  getUserById(id: string): Observable<User>;
+  createUser(user: CreateUserRequest): Observable<User>;
+  updateUser(id: string, user: UpdateUserRequest): Observable<User>;
+  deleteUser(id: string): Observable<boolean>;
+  activateUser(id: string): Observable<User>;
+  deactivateUser(id: string): Observable<User>;
 }
