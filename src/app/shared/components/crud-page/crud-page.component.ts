@@ -5,7 +5,9 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
-import { BreadcrumbComponent, Breadcrumb } from '../breadcrumb/breadcrumb.component';
+import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
+
+import { BreadcrumbItem } from '../breadcrumb/breadcrumb.component';
 
 @Component({
   selector: 'app-crud-page',
@@ -98,7 +100,7 @@ export class CrudPageComponent {
   @Input() title: string = 'Page Title';
   @Input() description?: string;
   @Input() showBreadcrumb: boolean = true;
-  @Input() breadcrumbs?: Breadcrumb[];
+  @Input() breadcrumbs?: BreadcrumbItem[];
   @Input() showAddButton: boolean = true;
   @Input() addButtonText: string = 'Add New';
   @Input() addButtonDisabled: boolean = false;

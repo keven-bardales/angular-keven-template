@@ -132,7 +132,7 @@ import { User, CreateUserRequest, UpdateUserRequest } from '../../types/user/use
 })
 export class UserFormModalComponent implements OnInit {
   @Input() isVisible = false;
-  @Input() user?: User;
+  @Input() user?: User | null = null;
   @Input() isLoading = false;
   @Input() canEditEmail = false;
 
@@ -148,9 +148,9 @@ export class UserFormModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.isEditMode = !!this.user;
     this.initForm();
     if (this.user) {
-      this.isEditMode = true;
       this.patchFormValues();
     }
   }

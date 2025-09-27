@@ -3,8 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map, catchError, throwError } from 'rxjs';
 import { IUserService, UserListParams } from './user-service.interface';
 import { User, CreateUserRequest, UpdateUserRequest } from '../../types/user/user.type';
-import { ApiResponse, PaginatedResponse } from '../../../../../../../../shared/models/api-response.model';
-import { environment } from '../../../../../../../../../environments/environment';
+import { ApiResponse, PaginatedResponse } from 'app/shared/models';
+import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root',

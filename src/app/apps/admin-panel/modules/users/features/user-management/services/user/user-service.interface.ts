@@ -1,6 +1,6 @@
 import { Observable } from "rxjs";
 import { User, CreateUserRequest, UpdateUserRequest } from "../../types/user/user.type";
-import { PaginatedResponse } from "../../../../../../../../shared/models/api-response.model";
+import { PaginatedResponse } from "app/shared/models";
 
 export interface UserListParams {
   page?: number;

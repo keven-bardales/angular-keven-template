@@ -4,7 +4,7 @@ import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/rout
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { filter, distinctUntilChanged } from 'rxjs/operators';
 
-export interface Breadcrumb {
+export interface BreadcrumbItem {
   label: string;
   url: string;
   params?: any;
@@ -36,9 +36,9 @@ export interface Breadcrumb {
 })
 export class BreadcrumbComponent implements OnInit {
   @Input() separator: string = '/';
-  @Input() customBreadcrumbs?: Breadcrumb[];
+  @Input() customBreadcrumbs?: BreadcrumbItem[];
 
-  breadcrumbs: Breadcrumb[] = [];
+  breadcrumbs: BreadcrumbItem[] = [];
 
   constructor(
     private router: Router,

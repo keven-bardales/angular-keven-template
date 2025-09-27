@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzTagModule } from 'ng-zorro-antd/tag';
@@ -7,13 +7,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 
 import { UserToken } from '../../services/user';
 import { User, CreateUserRequest, UpdateUserRequest } from '../../types/user/user.type';
-import { CrudPageComponent } from '../../../../../../../../shared/components/crud-page/crud-page.component';
-import {
-  DataTableComponent,
-  ColumnConfig,
-  TableAction,
-  PaginationConfig,
-} from '../../../../../../../../shared/components/data-table/data-table.component';
+import { CrudPageComponent, DataTableComponent, ColumnConfig, TableAction, PaginationConfig } from 'app/shared/components';
 import { UserFormModalComponent } from '../../components/user-form-modal/user-form-modal.component';
 import { UserListParams } from '../../services/user/user-service.interface';
 
@@ -22,6 +16,7 @@ import { UserListParams } from '../../services/user/user-service.interface';
   standalone: true,
   imports: [
     CommonModule,
+    DatePipe,
     CrudPageComponent,
     DataTableComponent,
     UserFormModalComponent,
@@ -32,8 +27,8 @@ import { UserListParams } from '../../services/user/user-service.interface';
   styleUrl: './user-list-page.scss',
 })
 export class UserListPage implements OnInit, OnDestroy {
-  @ViewChild('statusTemplate', { static: true }) statusTemplate!: TemplateRef<any>;
-  @ViewChild('dateTemplate', { static: true }) dateTemplate!: TemplateRef<any>;
+  @ViewChild('statusTemplate', { static: false }) statusTemplate!: TemplateRef<any>;
+  @ViewChild('dateTemplate', { static: false }) dateTemplate!: TemplateRef<any>;
 
   private userService = inject(UserToken);
   private message = inject(NzMessageService);
@@ -62,9 +57,13 @@ export class UserListPage implements OnInit, OnDestroy {
   searchValue = '';
 
   ngOnInit(): void {
-    this.setupTableColumns();
+    // Setup table configuration first
     this.setupTableActions();
-    this.loadUsers();
+    // Defer column setup until templates are available
+    setTimeout(() => {
+      this.setupTableColumns();
+      this.loadUsers();
+    });
   }
 
   ngOnDestroy(): void {
