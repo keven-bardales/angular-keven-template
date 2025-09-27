@@ -23,6 +23,17 @@ export class UserApiService implements IUserService {
       if (params.includeInactive !== undefined) httpParams = httpParams.set('includeInactive', params.includeInactive);
       if (params.sortBy) httpParams = httpParams.set('sortBy', params.sortBy);
       if (params.sortOrder) httpParams = httpParams.set('sortOrder', params.sortOrder);
+      if (params.isActive !== undefined) httpParams = httpParams.set('isActive', params.isActive);
+
+      // Handle any additional filter parameters dynamically
+      Object.keys(params).forEach(key => {
+        if (!['page', 'limit', 'searchTerm', 'includeInactive', 'sortBy', 'sortOrder', 'isActive'].includes(key)) {
+          const value = params[key];
+          if (value !== undefined && value !== null) {
+            httpParams = httpParams.set(key, value);
+          }
+        }
+      });
     }
 
     return this.http.get<ApiResponse<PaginatedResponse<User>>>(this.API_BASE, { params: httpParams })

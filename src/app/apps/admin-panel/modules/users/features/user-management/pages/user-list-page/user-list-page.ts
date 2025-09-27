@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, AfterViewInit, TemplateRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -26,12 +26,13 @@ import { UserListParams } from '../../services/user/user-service.interface';
   templateUrl: './user-list-page.html',
   styleUrl: './user-list-page.scss',
 })
-export class UserListPage implements OnInit, OnDestroy {
+export class UserListPage implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('statusTemplate', { static: false }) statusTemplate!: TemplateRef<any>;
   @ViewChild('dateTemplate', { static: false }) dateTemplate!: TemplateRef<any>;
 
   private userService = inject(UserToken);
   private message = inject(NzMessageService);
+  private cdr = inject(ChangeDetectorRef);
   private destroy$ = new Subject<void>();
 
   // Table data
@@ -53,17 +54,21 @@ export class UserListPage implements OnInit, OnDestroy {
   selectedUser: User | null = null;
   modalLoading = false;
 
-  // Search
+  // Search and Filters
   searchValue = '';
+  currentSort: { key: string; order: string } | null = null;
+  currentFilters: Record<string, any[]> = {};
 
   ngOnInit(): void {
-    // Setup table configuration first
+    // Setup only non-template dependent configuration
     this.setupTableActions();
-    // Defer column setup until templates are available
-    setTimeout(() => {
-      this.setupTableColumns();
-      this.loadUsers();
-    });
+  }
+
+  ngAfterViewInit(): void {
+    // Now templates are available, set up columns and load data
+    this.setupTableColumns();
+    this.loadUsers();
+    this.cdr.detectChanges();
   }
 
   ngOnDestroy(): void {
@@ -72,6 +77,12 @@ export class UserListPage implements OnInit, OnDestroy {
   }
 
   private setupTableColumns(): void {
+    // Ensure templates are available before setting up columns
+    if (!this.statusTemplate || !this.dateTemplate) {
+      console.warn('Templates not yet available, deferring column setup');
+      return;
+    }
+
     this.columns = [
       {
         key: 'fullName',
@@ -155,9 +166,14 @@ export class UserListPage implements OnInit, OnDestroy {
       limit: this.pagination.pageSize,
       searchTerm: this.searchValue,
       includeInactive: true,
-      sortBy: 'createdAt',
-      sortOrder: 'desc',
+      sortBy: this.currentSort?.key || 'createdAt',
+      sortOrder: this.currentSort?.order === 'ascend' ? 'asc' : 'desc',
     };
+
+    // Add filter parameters
+    if (this.currentFilters['isActive']) {
+      params.isActive = this.currentFilters['isActive'][0];
+    }
 
     this.userService
       .getUsers(params)
@@ -167,11 +183,13 @@ export class UserListPage implements OnInit, OnDestroy {
           this.users = response.data;
           this.pagination.total = response.meta.total;
           this.loading = false;
+          this.cdr.markForCheck();
         },
         error: error => {
           this.message.error('Failed to load users');
           console.error('Error loading users:', error);
           this.loading = false;
+          this.cdr.markForCheck();
         },
       });
   }
@@ -185,6 +203,18 @@ export class UserListPage implements OnInit, OnDestroy {
   onSearchChange(searchValue: string): void {
     this.searchValue = searchValue;
     this.pagination.pageIndex = 1; // Reset to first page when searching
+    this.loadUsers();
+  }
+
+  onSortChange(event: { key: string; order: string }): void {
+    this.currentSort = event;
+    this.pagination.pageIndex = 1; // Reset to first page when sorting
+    this.loadUsers();
+  }
+
+  onFilterChange(event: { key: string; values: any[] }): void {
+    this.currentFilters[event.key] = event.values;
+    this.pagination.pageIndex = 1; // Reset to first page when filtering
     this.loadUsers();
   }
 
@@ -209,8 +239,7 @@ export class UserListPage implements OnInit, OnDestroy {
         .subscribe({
           next: () => {
             this.message.success('User updated successfully');
-            this.showUserModal = false;
-            this.modalLoading = false;
+            this.closeModal();
             this.loadUsers();
           },
           error: error => {
@@ -227,8 +256,7 @@ export class UserListPage implements OnInit, OnDestroy {
         .subscribe({
           next: () => {
             this.message.success('User created successfully');
-            this.showUserModal = false;
-            this.modalLoading = false;
+            this.closeModal();
             this.loadUsers();
           },
           error: error => {
@@ -238,6 +266,12 @@ export class UserListPage implements OnInit, OnDestroy {
           },
         });
     }
+  }
+
+  private closeModal(): void {
+    this.showUserModal = false;
+    this.modalLoading = false;
+    this.selectedUser = null;
   }
 
   activateUser(user: User): void {

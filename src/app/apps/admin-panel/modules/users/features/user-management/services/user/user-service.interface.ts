@@ -9,6 +9,8 @@ export interface UserListParams {
   includeInactive?: boolean;
   sortBy?: string;
   sortOrder?: 'asc' | 'desc';
+  isActive?: boolean;
+  [key: string]: any; // Allow dynamic filter parameters
 }
 
 export interface IUserService {

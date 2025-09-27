@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, OnChanges, SimpleChanges, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzModalModule } from 'ng-zorro-antd/modal';
@@ -130,7 +130,7 @@ import { User, CreateUserRequest, UpdateUserRequest } from '../../types/user/use
     }
   `]
 })
-export class UserFormModalComponent implements OnInit {
+export class UserFormModalComponent implements OnInit, OnChanges {
   @Input() isVisible = false;
   @Input() user?: User | null = null;
   @Input() isLoading = false;
@@ -148,6 +148,21 @@ export class UserFormModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.setupForm();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // React to changes in inputs
+    if (changes['isVisible'] && this.isVisible) {
+      this.setupForm();
+    }
+
+    if (changes['user']) {
+      this.setupForm();
+    }
+  }
+
+  private setupForm(): void {
     this.isEditMode = !!this.user;
     this.initForm();
     if (this.user) {
@@ -244,8 +259,21 @@ export class UserFormModalComponent implements OnInit {
   }
 
   handleCancel(): void {
+    this.resetModal();
+  }
+
+  private resetModal(): void {
     this.isVisible = false;
     this.visibleChange.emit(false);
     this.userForm.reset();
+    this.isEditMode = false;
+    // Clear any validation errors
+    Object.keys(this.userForm.controls).forEach(key => {
+      const control = this.userForm.controls[key];
+      if (control) {
+        control.markAsUntouched();
+        control.markAsPristine();
+      }
+    });
   }
 }

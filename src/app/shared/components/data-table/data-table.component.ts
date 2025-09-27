@@ -130,14 +130,17 @@ export interface PaginationConfig {
             <!-- Data columns -->
             <th
               *ngFor="let column of columns"
-              [nzSortFn]="column.sortable && column.sortFn ? column!.sortFn : null"
-              [nzFilterFn]="column.filterFn ? column.filterFn : null"
+              [nzSortFn]="isServerSide ? null : (column.sortable && column.sortFn ? column!.sortFn : null)"
+              [nzSortDirections]="column.sortable ? ['ascend', 'descend', null] : []"
+              [nzFilterFn]="isServerSide ? null : (column.filterFn ? column.filterFn : null)"
               [nzFilters]="column.listOfFilter || []"
               [nzFilterMultiple]="column.filterMultiple ?? true"
               [nzWidth]="column.width || null"
               nzAlign="center"
               [nzLeft]="column.fixed === 'left'"
               [nzRight]="column.fixed === 'right'"
+              (nzSortOrderChange)="onSortChange(column.key, $event)"
+              (nzFilterChange)="onFilterChange(column.key, $event)"
             >
               {{ column.title }}
             </th>
@@ -301,6 +304,7 @@ export class DataTableComponent<T = any> implements OnInit, OnChanges {
   @Output() searchChange = new EventEmitter<string>();
   @Output() selectionChange = new EventEmitter<T[]>();
   @Output() sortChange = new EventEmitter<{ key: string; order: string }>();
+  @Output() filterChange = new EventEmitter<{ key: string; values: any[] }>();
 
   displayData: T[] = [];
   searchValue: string = '';
@@ -372,10 +376,21 @@ export class DataTableComponent<T = any> implements OnInit, OnChanges {
     this.pageChange.emit({ pageIndex: this.pagination.pageIndex, pageSize });
   }
 
-  onCurrentPageDataChange(data: T[]): void {
-    console.log(data);
+  onCurrentPageDataChange(_data: T[]): void {
     if (!this.isServerSide) {
       this.refreshCheckedStatus();
+    }
+  }
+
+  onSortChange(columnKey: string, order: string | null): void {
+    if (this.isServerSide && order) {
+      this.sortChange.emit({ key: columnKey, order });
+    }
+  }
+
+  onFilterChange(columnKey: string, values: any[]): void {
+    if (this.isServerSide) {
+      this.filterChange.emit({ key: columnKey, values });
     }
   }
 
